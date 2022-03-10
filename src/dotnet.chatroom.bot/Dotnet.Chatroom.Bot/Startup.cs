@@ -30,7 +30,7 @@ namespace Dotnet.Chatroom.Bot
 
             RegisterDependencies(services);
 
-            // TODO: Take from a environment variable
+            // TODO: Take from a environment variable and configure endpoints
             services.AddCors(policy => policy.AddPolicy("anywhere", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddCors(policy => policy.AddPolicy("production", p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
         }

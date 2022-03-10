@@ -3,7 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot", "Dotnet.Chatroom.Bot\Dotnet.Chatroom.Bot.csproj", "{82D10918-69E1-4CA6-B0FD-6B4AEFEB5728}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotnet.Chatroom.Bot", "Dotnet.Chatroom.Bot\Dotnet.Chatroom.Bot.csproj", "{82D10918-69E1-4CA6-B0FD-6B4AEFEB5728}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Service", "Dotnet.Chatroom.Bot.Service\Dotnet.Chatroom.Bot.Service.csproj", "{5BA83E08-1A83-4BC9-968A-0056C8D65486}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Repository", "Dotnet.Chatroom.Bot.Repository\Dotnet.Chatroom.Bot.Repository.csproj", "{81FA6DBE-00F7-43EC-80C0-05826AC3D446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Abstractions", "Dotnet.Chatroom.Bot.Abstractions\Dotnet.Chatroom.Bot.Abstractions.csproj", "{47494B19-0B01-41EC-AEDD-968BC281CB25}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BBE3F6B4-4DA4-4786-9379-463FE8F3AB20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{24DF01D7-DD06-44C8-9FDF-C73C71ECA7FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{3C1D1584-E3D0-4C4D-BE3D-5C053D2A6B20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Tests", "Dotnet.Chatroom.Bot.Tests\Dotnet.Chatroom.Bot.Tests.csproj", "{767B5A73-7907-463A-97FC-784EFF27658B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Benchmarks", "Dotnet.Chatroom.Bot.Benchmarks\Dotnet.Chatroom.Bot.Benchmarks.csproj", "{77BDB61C-9231-48F7-94D8-93135116A6E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +31,37 @@ Global
 		{82D10918-69E1-4CA6-B0FD-6B4AEFEB5728}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82D10918-69E1-4CA6-B0FD-6B4AEFEB5728}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82D10918-69E1-4CA6-B0FD-6B4AEFEB5728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BA83E08-1A83-4BC9-968A-0056C8D65486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BA83E08-1A83-4BC9-968A-0056C8D65486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BA83E08-1A83-4BC9-968A-0056C8D65486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BA83E08-1A83-4BC9-968A-0056C8D65486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81FA6DBE-00F7-43EC-80C0-05826AC3D446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81FA6DBE-00F7-43EC-80C0-05826AC3D446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81FA6DBE-00F7-43EC-80C0-05826AC3D446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81FA6DBE-00F7-43EC-80C0-05826AC3D446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47494B19-0B01-41EC-AEDD-968BC281CB25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47494B19-0B01-41EC-AEDD-968BC281CB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47494B19-0B01-41EC-AEDD-968BC281CB25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47494B19-0B01-41EC-AEDD-968BC281CB25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{767B5A73-7907-463A-97FC-784EFF27658B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{767B5A73-7907-463A-97FC-784EFF27658B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{767B5A73-7907-463A-97FC-784EFF27658B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{767B5A73-7907-463A-97FC-784EFF27658B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77BDB61C-9231-48F7-94D8-93135116A6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77BDB61C-9231-48F7-94D8-93135116A6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77BDB61C-9231-48F7-94D8-93135116A6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77BDB61C-9231-48F7-94D8-93135116A6E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{82D10918-69E1-4CA6-B0FD-6B4AEFEB5728} = {BBE3F6B4-4DA4-4786-9379-463FE8F3AB20}
+		{5BA83E08-1A83-4BC9-968A-0056C8D65486} = {BBE3F6B4-4DA4-4786-9379-463FE8F3AB20}
+		{81FA6DBE-00F7-43EC-80C0-05826AC3D446} = {BBE3F6B4-4DA4-4786-9379-463FE8F3AB20}
+		{47494B19-0B01-41EC-AEDD-968BC281CB25} = {BBE3F6B4-4DA4-4786-9379-463FE8F3AB20}
+		{767B5A73-7907-463A-97FC-784EFF27658B} = {24DF01D7-DD06-44C8-9FDF-C73C71ECA7FD}
+		{77BDB61C-9231-48F7-94D8-93135116A6E9} = {3C1D1584-E3D0-4C4D-BE3D-5C053D2A6B20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA669064-9D32-4CD6-A9FD-8B26A0676A7E}

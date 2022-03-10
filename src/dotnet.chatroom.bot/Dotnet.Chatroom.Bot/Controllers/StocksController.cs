@@ -6,6 +6,10 @@ namespace Dotnet.Chatroom.Bot.Controllers
 	[Route("api/[controller]")]
 	public class StocksController : ControllerBase
 	{
-		
+		[HttpPost("{stockCode}")]
+		public async Task<IActionResult> RequestQuoteByStockCodeAsync(string stockCode, CancellationToken cancellationToken = default)
+		{
+			return await Task.FromResult(Ok());
+		}
 	}
 }
