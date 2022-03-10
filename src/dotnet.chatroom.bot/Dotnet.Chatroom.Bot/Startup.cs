@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
 namespace Dotnet.Chatroom.Bot
@@ -8,8 +7,6 @@ namespace Dotnet.Chatroom.Bot
     {
         public string AssemblyVersion => GetType().Assembly.GetName().Version.ToString();
         public IConfiguration Configuration { get; }
-
-        public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
         public Startup(IConfiguration configuration)
         {
@@ -27,6 +24,7 @@ namespace Dotnet.Chatroom.Bot
 
             services.AddSignalR();
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddLogging(configure => configure.AddConsole());
 
             RegisterDependencies(services);
 
