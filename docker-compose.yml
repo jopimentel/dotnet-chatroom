@@ -1,0 +1,61 @@
+version: '3.8'
+
+networks:
+  db-network:
+    name: db-network
+  queue-network:
+    name: queue-network
+
+volumes:
+  mongodb-data:
+    name: mongodb-data
+  mssql-data:
+    name: mssql-data
+  rabbitmq-data:
+    name: rabbitmq-data
+  
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports: 
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - db-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sysadmin
+      MONGO_INITDB_ROOT_PASSWORD: mongodb@1
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - queue-network
+    environment:
+      RABBITMQ_DEFAULT_VHOST: chatroom
+      RABBITMQ_DEFAULT_USER: sysadmin
+      RABBITMQ_DEFAULT_PASS: rabbitmq@1
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    user: root
+    ports:
+      - "1434:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql/data
+      - mssql-data:/var/opt/mssql/log
+      - mssql-data:/var/opt/mssql/secrets
+    networks:
+      - db-network
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: MSSQL@admin1
+      MSSQL_PID: Developer
