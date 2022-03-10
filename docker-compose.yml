@@ -59,3 +59,22 @@ services:
       ACCEPT_EULA: Y
       SA_PASSWORD: MSSQL@admin1
       MSSQL_PID: Developer
+
+  dotnet-chatroom:
+    image: dotnet.chatroom.api:latest
+    build:
+      context: ./src
+      dockerfile: ./dotnet.chatroom/Dockerfile
+    container_name: dotnet.chatroom.api
+    ports:
+      - "8081:80"
+      - "4431:443"
+    networks:
+      - queue-network
+      - db-network
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      - mssql
+      - rabbitmq
+      - mongodb
