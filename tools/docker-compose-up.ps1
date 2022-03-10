@@ -1,0 +1,1 @@
+docker compose -f $PSScriptRoot\..\docker-compose.yml -p 'dotnet-chatroom' up
