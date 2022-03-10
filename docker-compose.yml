@@ -5,6 +5,8 @@ networks:
     name: db-network
   queue-network:
     name: queue-network
+  api-network:
+    name: api-network
 
 volumes:
   mongodb-data:
@@ -72,6 +74,7 @@ services:
     networks:
       - queue-network
       - db-network
+      - api-network
     environment:
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:
@@ -91,9 +94,20 @@ services:
     networks:
       - queue-network
       - db-network
+      - api-network
     environment:
       ASPNETCORE_ENVIRONMENT: Production
     depends_on:
-      - mssql
       - rabbitmq
-      - mongodb      
+      - mongodb
+
+  dotnet-chatroom-app:
+    image: dotnet.chatroom.app:latest
+    build:
+      context: ./src
+      dockerfile: ./dotnet.chatroom.app/Dockerfile
+    container_name: dotnet.chatroom.app
+    ports:
+      - "8083:80"
+    networks:
+      - api-network
