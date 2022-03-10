@@ -78,3 +78,22 @@ services:
       - mssql
       - rabbitmq
       - mongodb
+
+  dotnet-chatroom-bot:
+    image: dotnet.chatroom.bot:latest
+    build:
+      context: ./src
+      dockerfile: ./dotnet.chatroom.bot/Dockerfile
+    container_name: dotnet.chatroom.bot
+    ports:
+      - "8082:80"
+      - "4432:443"
+    networks:
+      - queue-network
+      - db-network
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    depends_on:
+      - mssql
+      - rabbitmq
+      - mongodb      
