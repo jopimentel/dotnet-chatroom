@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.IO;
 using System.Net.Mime;
+using Dotnet.Chatroom.Bot.Repository;
+using MongoDB.Bson;
 
 namespace Dotnet.Chatroom.Bot.Controllers
 {
@@ -16,14 +18,16 @@ namespace Dotnet.Chatroom.Bot.Controllers
 		/// 
 		/// </summary>
 		private readonly ILogger<StocksController> _logger;
+		private readonly IFileRepository _fileRepository;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="logger"></param>
-		public StocksController(ILogger<StocksController> logger)
+		public StocksController(ILogger<StocksController> logger, IFileRepository fileRepository)
 		{
 			_logger = logger;
+			_fileRepository = fileRepository;
 		}
 
 		/// <summary>
@@ -37,6 +41,7 @@ namespace Dotnet.Chatroom.Bot.Controllers
 		{
 			_logger.LogInformation("Requesting the stock quote of {stockCode}", stockCode);
 
+			string newFilename = Guid.NewGuid().ToString();
 			string url = $"https://stooq.com/q/l/?s={stockCode}&f=sd2t2ohlcv&h&e=csv";
 			using HttpClient client = new();
 
@@ -48,12 +53,15 @@ namespace Dotnet.Chatroom.Bot.Controllers
 					return StatusCode((int)response.StatusCode, response.Content);
 
 				using Stream content = await response.Content.ReadAsStreamAsync(cancellationToken);
-				
-				return Ok(new { FileName = GetFileName(response) ?? stockCode, content.Length });
+
+				string filename = GetFileName(response) ?? stockCode;
+				ObjectId fileId = await _fileRepository.SaveToGridFSAsync(newFilename, filename, content, cancellationToken);
+
+				return Ok(new { fileId, stockCode, filename = newFilename, content.Length });
 			}
 			catch (Exception exception)
 			{
-				_logger.LogError("An exception occurr while requesting the stock quote of {stockCode}:", stockCode);
+				_logger.LogError("An exception occured while requesting the stock quote of {stockCode}:", stockCode);
 				_logger.LogError("{message}", exception.GetBaseException().Message);
 
 				return StatusCode((int)HttpStatusCode.InternalServerError, exception);

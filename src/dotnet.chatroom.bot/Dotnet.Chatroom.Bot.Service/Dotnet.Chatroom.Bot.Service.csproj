@@ -5,4 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dotnet.Chatroom.Bot.Abstractions\Dotnet.Chatroom.Bot.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
