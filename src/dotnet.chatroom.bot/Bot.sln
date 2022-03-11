@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Repository", "Dotnet.Chatroom.Bot.Repository\Dotnet.Chatroom.Bot.Repository.csproj", "{81FA6DBE-00F7-43EC-80C0-05826AC3D446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Abstractions", "Dotnet.Chatroom.Bot.Abstractions\Dotnet.Chatroom.Bot.Abstractions.csproj", "{47494B19-0B01-41EC-AEDD-968BC281CB25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Chatroom.Bot.Repository.Abstractions", "Dotnet.Chatroom.Bot.Repository.Abstractions\Dotnet.Chatroom.Bot.Repository.Abstractions.csproj", "{47494B19-0B01-41EC-AEDD-968BC281CB25}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BBE3F6B4-4DA4-4786-9379-463FE8F3AB20}"
 EndProject

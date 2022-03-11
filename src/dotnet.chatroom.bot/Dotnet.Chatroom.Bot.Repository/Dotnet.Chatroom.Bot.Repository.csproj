@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dotnet.Chatroom.Bot.Abstractions\Dotnet.Chatroom.Bot.Abstractions.csproj" />
+    <ProjectReference Include="..\Dotnet.Chatroom.Bot.Repository.Abstractions\Dotnet.Chatroom.Bot.Repository.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

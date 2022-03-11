@@ -12,10 +12,6 @@
 		/// <summary>
 		/// 
 		/// </summary>
-		public string FileId { get; set; }
-		/// <summary>
-		/// 
-		/// </summary>
 		public string StockCode { get; set; }
 		/// <summary>
 		/// 
@@ -24,6 +20,6 @@
 		/// <summary>
 		/// 
 		/// </summary>
-		public long Length { get; set; }
+		public DateTimeOffset Date { get; set; }
 	}
 }

@@ -42,33 +42,18 @@ namespace Dotnet.Chatroom.Bot.Controllers
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
 		[HttpPost("{stockCode}")]
-		public async Task<IActionResult> RequestQuoteByStockCodeAsync(string stockCode, CancellationToken cancellationToken = default)
+		public IActionResult RequestQuoteByStockCodeAsync(string stockCode, CancellationToken cancellationToken = default)
 		{
 			_logger.LogInformation("Requesting the stock quote of {stockCode}", stockCode);
 
-			string newFilename = Guid.NewGuid().ToString();
-			string url = $"https://stooq.com/q/l/?s={stockCode}&f=sd2t2ohlcv&h&e=csv";
-			using HttpClient client = new();
-
 			try
-			{
-				using HttpResponseMessage response = await client.GetAsync(url, cancellationToken);
-
-				if (response.StatusCode != HttpStatusCode.OK)
-					return StatusCode((int)response.StatusCode, response.Content);
-
-				using Stream content = await response.Content.ReadAsStreamAsync(cancellationToken);
-
-				string filename = GetFileName(response) ?? stockCode;
-				ObjectId fileId = await _fileRepository.SaveToGridFSAsync(newFilename, filename, content, cancellationToken);
-
+			{				
 				RequestStockQuote request = new()
 				{
 					Id = Guid.NewGuid().ToString(),
-					FileId = fileId.ToString(),
 					StockCode = stockCode,
-					Filename = newFilename,
-					Length = content.Length
+					Filename = Guid.NewGuid().ToString(),
+					Date = DateTimeOffset.UtcNow
 				};
 
 				string body = JsonSerializer.Serialize(request);
@@ -89,28 +74,6 @@ namespace Dotnet.Chatroom.Bot.Controllers
 
 				return StatusCode((int)HttpStatusCode.InternalServerError, exception);
 			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="response"></param>
-		/// <returns></returns>
-		private static string GetFileName(HttpResponseMessage response)
-		{
-			// TODO: move to extensión method
-			bool exists = response.Content.Headers.TryGetValues("Content-Disposition", out IEnumerable<string> values);
-
-			if (!exists)
-				return null;
-
-			string disposition = values.FirstOrDefault();
-			ContentDisposition contentDisposition = new(disposition);
-
-			if (contentDisposition.DispositionType != "attachment")
-				return null;
-
-			return contentDisposition.FileName;
 		}
 	}
 }
