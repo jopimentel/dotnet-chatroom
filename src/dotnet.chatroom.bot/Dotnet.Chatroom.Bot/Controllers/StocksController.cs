@@ -4,6 +4,9 @@ using System.IO;
 using System.Net.Mime;
 using Dotnet.Chatroom.Bot.Repository;
 using MongoDB.Bson;
+using RabbitMQ.Client;
+using System.Text.Json;
+using System.Text;
 
 namespace Dotnet.Chatroom.Bot.Controllers
 {
@@ -19,15 +22,17 @@ namespace Dotnet.Chatroom.Bot.Controllers
 		/// </summary>
 		private readonly ILogger<StocksController> _logger;
 		private readonly IFileRepository _fileRepository;
+		private readonly IModel _model;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="logger"></param>
-		public StocksController(ILogger<StocksController> logger, IFileRepository fileRepository)
+		public StocksController(ILogger<StocksController> logger, IFileRepository fileRepository, IModel model)
 		{
 			_logger = logger;
 			_fileRepository = fileRepository;
+			_model = model;
 		}
 
 		/// <summary>
@@ -57,7 +62,25 @@ namespace Dotnet.Chatroom.Bot.Controllers
 				string filename = GetFileName(response) ?? stockCode;
 				ObjectId fileId = await _fileRepository.SaveToGridFSAsync(newFilename, filename, content, cancellationToken);
 
-				return Ok(new { fileId, stockCode, filename = newFilename, content.Length });
+				RequestStockQuote request = new()
+				{
+					Id = Guid.NewGuid().ToString(),
+					FileId = fileId.ToString(),
+					StockCode = stockCode,
+					Filename = newFilename,
+					Length = content.Length
+				};
+
+				string body = JsonSerializer.Serialize(request);
+				byte[] message = Encoding.UTF8.GetBytes(body);
+
+				IBasicProperties properties = _model.CreateBasicProperties();
+				properties.CorrelationId = request.Id;
+				properties.ReplyTo = "bot::stock.quote.out";
+
+				_model.BasicPublish(exchange: "", routingKey: "bot::stock.quote.in", mandatory: false, properties, message);
+
+				return Ok(request);
 			}
 			catch (Exception exception)
 			{

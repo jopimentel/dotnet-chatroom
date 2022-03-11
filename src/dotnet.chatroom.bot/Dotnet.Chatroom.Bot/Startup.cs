@@ -1,8 +1,12 @@
 ﻿using Dotnet.Chatroom.Bot.Repository;
-using Dotnet.Chatroom.Bot.Service;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Reflection;
+using System.Text;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Dotnet.Chatroom.Bot
 {
@@ -80,6 +84,61 @@ namespace Dotnet.Chatroom.Bot
 			});
 
 			services.AddScoped<IFileRepository, FileRepository>();
+
+			// RabbitMQ
+			ConnectionFactory factory = new()
+			{
+				Uri = new Uri("amqp://sysadmin:rabbitmq%401@localhost:5672/chatroom")
+			};
+
+			services.AddSingleton(_ => factory.CreateConnection());
+			services.AddScoped(provider =>
+			{
+				IConnection connection = provider.GetRequiredService<IConnection>();
+				IModel model = connection.CreateModel();
+
+				model.QueueDeclare("bot::stock.quote.out", durable: true, exclusive: false, autoDelete: false);
+
+				return model;
+			});
+
+			IEnumerable<Type> types = GetType().Assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && typeof(IHandler).IsAssignableFrom(t));
+
+			foreach (Type type in types)
+				services.AddSingleton(type);
+
+			ServiceProvider provider = services.BuildServiceProvider();
+			IConnection connection = provider.GetRequiredService<IConnection>();
+
+			foreach (Type type in types)
+			{
+				Type[] interfaces = type.GetInterfaces();
+				Type @interface = interfaces.Where(i => i.GenericTypeArguments.Length == 1).FirstOrDefault();
+				Type genericType = @interface.GenericTypeArguments.FirstOrDefault();
+				object instance = provider.GetService(type);
+				IHandler handler = (IHandler)instance;
+				IModel model = connection.CreateModel();
+
+				model.QueueDeclare(handler.Queue, durable: true, exclusive: false, autoDelete: false);
+
+				EventingBasicConsumer consumer = new(model);
+
+				consumer.Received += (object sender, BasicDeliverEventArgs arguments) =>
+				{
+					try
+					{
+						byte[] message = arguments.Body.ToArray();
+						string body = Encoding.UTF8.GetString(message);
+						object data = JsonSerializer.Deserialize(body, genericType);
+						MethodInfo method = type.GetMethod("HandleAsync");
+
+						method.Invoke(instance, parameters: new[] { data, model, arguments });
+					}
+					catch (Exception) { }
+				};
+
+				model.BasicConsume(handler.Queue, autoAck: false, consumer);
+			}
 		}
 	}
 }
