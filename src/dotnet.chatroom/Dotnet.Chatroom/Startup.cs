@@ -8,8 +8,7 @@ namespace Dotnet.Chatroom
     {
         public string AssemblyVersion => GetType().Assembly.GetName().Version.ToString();
         public IConfiguration Configuration { get; }
-
-
+        
         public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
         public Startup(IConfiguration configuration)
@@ -20,28 +19,24 @@ namespace Dotnet.Chatroom
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            OpenApiInfo openApiInfo = new() { Title = "Dotnet.Chatroom", Version = $"v{AssemblyVersion}" };
+
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc($"v{AssemblyVersion}", new OpenApiInfo { Title = "Dotnet.Chatroom", Version = $"v{AssemblyVersion}" });
-            });
+            services.AddSwaggerGen(c => c.SwaggerDoc($"v{AssemblyVersion}", openApiInfo));
 
             services.AddSignalR();
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddLogging(configure => configure.AddConsole());
 
-            // TODO: Take from a environment variable
-            string connection = "Server=localhost,1434; Database=master; Integrated Security=False; User Id=sa; Password=MSSQL@admin1;";
 #if DEBUG
-            services.AddDbContext<ChatroomContext>(options => options.UseLoggerFactory(loggerFactory).UseSqlServer(connection));
+            services.AddDbContext<ChatroomContext>(options => options.UseLoggerFactory(loggerFactory).UseSqlServer(Environment.MSSQLConnectionString));
 #else
-            services.AddDbContext<ChatroomContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ChatroomContext>(options => options.UseSqlServer(Environment.MSSQLConnectionString));
 #endif
 
             RegisterDependencies(services);
 
-            // TODO: Take from a environment variable
-            services.AddCors(policy => policy.AddPolicy("anywhere", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
-            services.AddCors(policy => policy.AddPolicy("production", p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
+			services.AddCors(policy => policy.AddPolicy("cors", p => p.WithOrigins(Environment.Origins).AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,20 +56,29 @@ namespace Dotnet.Chatroom
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessagesHub>("hub/messages");
+                endpoints.MapHub<UsersHub>("hub/users");
+                endpoints.MapHub<RoomsHub>("hub/rooms");
             });
         }
 
         /// <summary>
-        /// 
+        /// Adds the application required services to the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <param name="services"></param>
+        /// <param name="services">The <see cref="IServiceCollection"/> instance to be used to register the services.</param>
         private void RegisterDependencies(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-            //services.AddScoped<IApplicationContext, HttpApplicationContext>();
+            services.AddApplicationContext();
 
-            // Dependencies goes here
+            // MongoDB
+            services.AddMongoClient(Environment.MongoConnectionString);
+            services.AddMongoDatabase<Stock>(Environment.MongoDatabase);
+
+            // RabbitMQ
+            services
+                .AddRabbitMQ(Environment.RabbitMQUri)
+                .DeclareQueues(queues: new[] { Environment.StockQuoteOut })
+                .AddHandlers(assembly: GetType().Assembly);
         }
-
     }
 }
