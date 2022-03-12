@@ -96,7 +96,17 @@ services:
       - db-network
       - api-network
     environment:
+      APPLICATION_NAME: Dotnet Chatroom
       ASPNETCORE_ENVIRONMENT: Production
+      CORS_ORIGINS: http://localhost:4200,http://dotnet.chatroom.app:80
+      MONGO_CONNECTION_STRING: mongodb://sysadmin:mongodb%401@mongodb:27017/?authSource=admin&readPreference=primary&appname=Dotnet.ChatRoom&directConnection=true&ssl=false
+      MONGO_DATABASE: stocks
+      MONGO_GRID_FS_DATABASE: files
+      RABBITMQ_URI: amqp://sysadmin:rabbitmq%401@rabbitmq:5672/chatroom
+      QUEUE_STOCK_QUOTE_IN: bot::stock.quote.in
+      QUEUE_STOCK_QUOTE_OUT: bot::stock.quote.out
+      STOOQ_API: https://stooq.com/q/l/?s={0}&f=sd2t2ohlcv&h&e=csv
+      HANDLE_TIMOUT: 60000
     depends_on:
       - rabbitmq
       - mongodb

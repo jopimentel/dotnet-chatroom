@@ -1,5 +1,4 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 
 namespace Dotnet.Chatroom.Bot.Repository
@@ -12,18 +11,20 @@ namespace Dotnet.Chatroom.Bot.Repository
 		/// <summary>
 		/// 
 		/// </summary>
-		private readonly IMongoDatabase _mongodb;
+		private readonly IMongoDatabase<FileRepository> _mongodb;
+		/// <summary>
+		/// 
+		/// </summary>
 		private readonly IGridFSBucket _bucket;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="mongodb"></param>
-		public FileRepository(IMongoDatabase mongodb)
+		public FileRepository(IMongoDatabase<FileRepository> mongodb)
 		{
 			_mongodb = mongodb;
-			_bucket = new GridFSBucket(_mongodb);
-
+			_bucket = new GridFSBucket(_mongodb.InnerDatabase);
 		}
 
 		/// <summary>
@@ -32,7 +33,6 @@ namespace Dotnet.Chatroom.Bot.Repository
 		/// <param name="filename"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		/// <exception cref="NotImplementedException"></exception>
 		public virtual Task<MemoryStream> GetStreamByNameAsync(string filename, CancellationToken cancellationToken = default)
 		{
 			MemoryStream stream = new();
@@ -45,22 +45,14 @@ namespace Dotnet.Chatroom.Bot.Repository
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="newFilename"></param>
 		/// <param name="filename"></param>
 		/// <param name="stream"></param>
+		/// <param name="options"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public virtual Task<ObjectId> SaveToGridFSAsync(string newFilename, string filename, Stream stream, CancellationToken cancellationToken = default)
+		public virtual Task<ObjectId> SaveToGridFSAsync(string filename, Stream stream, GridFSUploadOptions options, CancellationToken cancellationToken = default)
 		{
-			GridFSUploadOptions options = new()
-			{
-				Metadata = new BsonDocument
-				{
-					{ "previous", filename }
-				}
-			};
-
-			return _bucket.UploadFromStreamAsync(newFilename, stream, options, cancellationToken);
+			return _bucket.UploadFromStreamAsync(filename, stream, options, cancellationToken);
 		}
 	}
 }

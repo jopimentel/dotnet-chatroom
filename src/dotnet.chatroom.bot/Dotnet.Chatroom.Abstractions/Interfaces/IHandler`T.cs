@@ -1,7 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Dotnet.Chatroom.Bot
+namespace Dotnet.Chatroom
 {
 	/// <summary>
 	/// 
@@ -15,6 +15,6 @@ namespace Dotnet.Chatroom.Bot
 		/// <param name="model"></param>
 		/// <param name="arguments"></param>
 		/// <returns></returns>
-		Task HandleAsync(T data, IModel model, BasicDeliverEventArgs arguments);
+		Task HandleAsync(T data, IModel model, BasicDeliverEventArgs arguments, CancellationToken cancellationToken = default);
 	}
 }

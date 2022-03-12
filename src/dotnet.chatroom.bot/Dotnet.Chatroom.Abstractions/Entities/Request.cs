@@ -1,9 +1,9 @@
-﻿namespace Dotnet.Chatroom.Bot
+﻿namespace Dotnet.Chatroom
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class RequestStockQuote
+	public class Request
 	{
 		/// <summary>
 		/// 
@@ -12,11 +12,11 @@
 		/// <summary>
 		/// 
 		/// </summary>
-		public string StockCode { get; set; }
+		public Command Command { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Filename { get; set; }
+		public string Audience { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
