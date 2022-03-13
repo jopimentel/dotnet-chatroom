@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dotnet.Chatroom.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
@@ -72,7 +73,7 @@ namespace Dotnet.Chatroom
 
             // MongoDB
             services.AddMongoClient(Environment.MongoConnectionString);
-            services.AddMongoDatabase<Stock>(Environment.MongoDatabase);
+            services.AddMongoDatabase<Message>(Environment.MongoDatabase);
 
             // RabbitMQ
             services

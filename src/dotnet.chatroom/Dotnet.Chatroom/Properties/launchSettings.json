@@ -28,7 +28,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CORS_ORIGINS": "http://localhost:4200,http://localhost:8083",
         "MONGO_CONNECTION_STRING": "mongodb://sysadmin:mongodb%401@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false",
-        "MONGO_DATABASE": "stocks",
+        "MONGO_DATABASE": "chats",
         "MONGO_GRID_FS_DATABASE": "files",
         "RABBITMQ_URI": "amqp://sysadmin:rabbitmq%401@localhost:5672/chatroom",
         "QUEUE_STOCK_QUOTE_OUT": "bot::stock.quote.out",

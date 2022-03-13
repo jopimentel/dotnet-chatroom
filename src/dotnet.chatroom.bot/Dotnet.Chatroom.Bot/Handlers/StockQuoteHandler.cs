@@ -54,14 +54,14 @@ namespace Dotnet.Chatroom.Bot
 		/// <returns>A <see cref="Task"/> that indicates the completation of the operation.</returns>
 		public async Task HandleAsync(RequestStockQuote data, IModel model, BasicDeliverEventArgs arguments, CancellationToken cancellationToken = default)
 		{
+			string correlationId = arguments.BasicProperties.CorrelationId;
+			string replyTo = arguments.BasicProperties.ReplyTo;
+			ulong deliveryTag = arguments.DeliveryTag;
+			
+			_logger.LogInformation("Getting {stockCode} stock quote from the stooq api", data.StockCode);
+
 			try
 			{
-				string correlationId = arguments.BasicProperties.CorrelationId;
-				string replyTo = arguments.BasicProperties.ReplyTo;
-				ulong deliveryTag = arguments.DeliveryTag;
-
-				_logger.LogInformation("Getting {stockCode} stock quote from the stooq api", data.StockCode);
-
 				using HttpResponseMessage response = await GetStockAsync(data.StockCode, cancellationToken);
 
 				if (response.StatusCode != HttpStatusCode.OK)
@@ -77,10 +77,8 @@ namespace Dotnet.Chatroom.Bot
 				StooqResponse fileContent = await ReadStreamAsync(content, cancellationToken);
 				Stock stock = await _stockService.AddAsync(correlationId, fileContent, cancellationToken);
 
-				// Acknowledges the message and pubish the stock quote information 
-				// to the specified reply to queue
+				// Pubish the stock quote information to the specified reply to queue
 				await model.PublishAsync(stock, routingKey: replyTo, cancellationToken);
-				model.BasicAck(deliveryTag, multiple: false);
 
 				_logger.LogInformation("{stockCode} stock quote published to {replyTo}", data.StockCode, replyTo);
 			}
@@ -89,6 +87,8 @@ namespace Dotnet.Chatroom.Bot
 				_logger.LogError("An exception occured while requesting the stock quote of {stockCode}:", data.StockCode);
 				_logger.LogError("{message}", exception.GetBaseException().Message);
 			}
+
+			model.BasicAck(deliveryTag, multiple: false);
 		}
 
 		/// <summary>

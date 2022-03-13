@@ -40,8 +40,12 @@ namespace Dotnet.Chatroom
 		/// </summary>
 		public static int HandleTimeout => int.Parse(Env.GetEnvironmentVariable("HANDLE_TIMOUT") ?? "30000");
 		/// <summary>
-		/// The input queue used to publish the initial request to obtain the stock quote information.
+		/// 
 		/// </summary>
 		public static string MSSQLConnectionString => Env.GetEnvironmentVariable("MSSQL_CONNECTION_STRING");
+		/// <summary>
+		/// 
+		/// </summary>
+		public static string MessageHub => "http://localhost:25594/hub/messages";
 	}
 }
