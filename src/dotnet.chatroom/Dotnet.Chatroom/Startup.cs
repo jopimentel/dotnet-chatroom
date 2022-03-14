@@ -30,11 +30,7 @@ namespace Dotnet.Chatroom
 			services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 			services.AddLogging(configure => configure.AddConsole());
 
-#if DEBUG
-			services.AddDbContext<ChatroomContext>(options => options.UseLoggerFactory(loggerFactory).UseSqlServer(Environment.MSSQLConnectionString));
-#else
             services.AddDbContext<ChatroomContext>(options => options.UseSqlServer(Environment.MSSQLConnectionString));
-#endif
 
 			RegisterDependencies(services);
 

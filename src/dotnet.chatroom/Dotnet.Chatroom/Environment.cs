@@ -46,7 +46,7 @@ namespace Dotnet.Chatroom
 		/// <summary>
 		/// 
 		/// </summary>
-		public static string MessageHub => "http://localhost:25594/hub/chats";
+		public static string MessageHub => "http://localhost/hub/chats";
 		/// <summary>
 		/// 
 		/// </summary>

@@ -2,7 +2,7 @@ FROM node:17.6.0-alpine as node
 WORKDIR /app
 EXPOSE 80
 
-COPY . .
+COPY ["./dotnet.chatroom.app", "."]
 RUN npm install
 RUN npm run build:prod
 
