@@ -4,11 +4,11 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Version>1.0.0</Version>
 		<Authors>Juan Osiris Pimentel</Authors>
-		<Description>Is a modern library.</Description>
-		<Copyright></Copyright>
+		<Description>Is a modern library that provides the abstractions and base implementations of some classes used by Dotnet.ChatRoom ecosystem.</Description>
+		<Copyright>© 2022</Copyright>
 		<RepositoryUrl></RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>library;bot;chatroom;.net6</PackageTags>
+		<PackageTags>library;abstractions;chatroom;.net6</PackageTags>
 		<PackageProjectUrl></PackageProjectUrl>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -16,6 +16,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="MongoDB.Driver" Version="2.15.0" />
 		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.15.0" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.2.4" />

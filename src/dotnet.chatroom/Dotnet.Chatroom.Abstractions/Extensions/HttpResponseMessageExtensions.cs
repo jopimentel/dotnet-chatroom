@@ -5,7 +5,7 @@ namespace Dotnet.Chatroom
 	/// <summary>
 	/// Extends the <see cref="HttpResponseMessage"/> types by adding additional functionalities.
 	/// </summary>
-	internal static class HttpResponseMessageExtensions
+	public static class HttpResponseMessageExtensions
 	{
 		/// <summary>
 		/// Gets the name of the file which is part of the content of the <see cref="HttpResponseMessage"/>.

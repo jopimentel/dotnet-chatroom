@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Reflection;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Dotnet.Chatroom
 	/// <summary>
 	/// Extends the <see cref="RabbitMQBuilder"/> types by adding additional functionalities.
 	/// </summary>
-	internal static class RabbitMQBuilderExtensions
+	public static class RabbitMQBuilderExtensions
 	{
 		/// <summary>
 		/// Allows to declare the queues to be used by the application.

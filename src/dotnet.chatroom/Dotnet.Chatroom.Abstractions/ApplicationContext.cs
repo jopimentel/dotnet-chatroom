@@ -1,4 +1,6 @@
-﻿namespace Dotnet.Chatroom
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Dotnet.Chatroom
 {
 	/// <summary>
 	/// Stores scoped data obtained from the current <see cref="HttpContent"/>.

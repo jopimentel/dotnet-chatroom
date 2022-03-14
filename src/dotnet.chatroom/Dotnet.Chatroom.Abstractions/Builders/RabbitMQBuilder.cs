@@ -1,9 +1,11 @@
-﻿namespace Dotnet.Chatroom
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Dotnet.Chatroom
 {
 	/// <summary>
 	/// Provides a simple API surface for configuring all RabbitMQ services.
 	/// </summary>
-	internal class RabbitMQBuilder
+	public class RabbitMQBuilder
 	{
 		/// <summary>
 		/// Refers to the <see cref="IServiceCollection"/> instance to be used to register all the services.

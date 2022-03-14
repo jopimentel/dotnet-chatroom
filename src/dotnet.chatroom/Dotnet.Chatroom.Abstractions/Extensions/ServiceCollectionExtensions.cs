@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using RabbitMQ.Client;
 
 namespace Dotnet.Chatroom
@@ -6,7 +7,7 @@ namespace Dotnet.Chatroom
 	/// <summary>
 	/// Extends the <see cref="IServiceCollection"/> types by adding additional functionalities.
 	/// </summary>
-	internal static class ServiceCollectionExtensions
+	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
 		/// Adds the <see cref="IMongoClient"/> to the <see cref="IServiceCollection"/>.
