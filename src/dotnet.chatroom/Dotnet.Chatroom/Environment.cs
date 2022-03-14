@@ -24,10 +24,6 @@ namespace Dotnet.Chatroom
 		/// </summary>
 		public static string MongoDatabase => Env.GetEnvironmentVariable("MONGO_DATABASE");
 		/// <summary>
-		/// The name of the database that will be used by the MongoDB GridFS.
-		/// </summary>
-		public static string MongoGridFSDatabase => Env.GetEnvironmentVariable("MONGO_GRID_FS_DATABASE");
-		/// <summary>
 		/// The connection string to the RabbitMQ server.
 		/// </summary>
 		public static string RabbitMQUri => Env.GetEnvironmentVariable("RABBITMQ_URI");
@@ -35,10 +31,6 @@ namespace Dotnet.Chatroom
 		/// The output queue used to publish the stock quote information obtained from the stooq api.
 		/// </summary>
 		public static string StockQuoteOut => Env.GetEnvironmentVariable("QUEUE_STOCK_QUOTE_OUT");
-		/// <summary>
-		/// The time interval in miliseconds used to wait before canceling a operation.
-		/// </summary>
-		public static int HandleTimeout => int.Parse(Env.GetEnvironmentVariable("HANDLE_TIMOUT") ?? "30000");
 		/// <summary>
 		/// 
 		/// </summary>

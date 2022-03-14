@@ -31,6 +31,7 @@ namespace Dotnet.Chatroom.Service
 		/// <exception cref="NotImplementedException"></exception>
 		public Task<int> AddAsync(User user, CancellationToken cancellationToken = default)
 		{
+			// TODO: Move to a service to provide the flexibility DI provides
 			byte[] passwordBytes = Encoding.UTF8.GetBytes(user.Password);
 			string password = Convert.ToBase64String(passwordBytes);
 

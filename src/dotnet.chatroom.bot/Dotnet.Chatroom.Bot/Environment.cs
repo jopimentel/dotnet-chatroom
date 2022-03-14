@@ -43,9 +43,5 @@ namespace Dotnet.Chatroom.Bot
 		/// The endpoint used to obtain the stock quote information.
 		/// </summary>
 		public static string StooqApi => Env.GetEnvironmentVariable("STOOQ_API");
-		/// <summary>
-		/// The time interval in miliseconds used to wait before canceling a operation.
-		/// </summary>
-		public static int HandleTimeout => int.Parse(Env.GetEnvironmentVariable("HANDLE_TIMOUT") ?? "30000");
 	}
 }

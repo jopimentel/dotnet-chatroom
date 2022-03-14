@@ -132,6 +132,7 @@ namespace Dotnet.Chatroom.Bot
 
 			cancellationToken.ThrowIfCancellationRequested();
 
+			// TODO: Return empty Stooq Response to indicate the user something went wrong
 			if (string.IsNullOrWhiteSpace(fileContent))
 				throw new InvalidOperationException();
 

@@ -5,16 +5,33 @@ using Newtonsoft.Json;
 
 namespace Dotnet.Chatroom.Bot
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class Startup
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public string AssemblyVersion => GetType().Assembly.GetName().Version.ToString();
+		/// <summary>
+		/// 
+		/// </summary>
 		public IConfiguration Configuration { get; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="configuration"></param>
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="services"></param>
 		public void ConfigureServices(IServiceCollection services)
 		{
 			OpenApiInfo openApiInfo = new () { Title = Environment.AppName, Version = $"v{AssemblyVersion}" };
@@ -30,6 +47,11 @@ namespace Dotnet.Chatroom.Bot
 			services.AddCors(policy => policy.AddPolicy("cors", p => p.WithOrigins(Environment.Origins).AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="env"></param>
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())

@@ -44,7 +44,7 @@ namespace Dotnet.Chatroom.Bot
 		/// When the task completes, it contains the primary key of the created request.
 		/// </returns>
 		[HttpPost("{stockCode}")]
-		public async Task<IActionResult> RequestQuoteByStockCodeAsync(string stockCode, [FromBody] RequestStockQuote request, CancellationToken cancellationToken = default)
+		public async Task<IActionResult> RequestQuoteByStockCodeAsync([FromRoute] string stockCode, [FromBody] RequestStockQuote request, CancellationToken cancellationToken = default)
 		{
 			_logger.LogInformation("Requesting the stock quote of {stockCode}", stockCode);
 

@@ -74,7 +74,7 @@ namespace Dotnet.Chatroom
 
 			model.QueueDeclare(handler.Queue, durable: true, exclusive: false, autoDelete: false);
 
-			CancellationTokenSource tokenSource = new();
+			CancellationTokenSource tokenSource = new(Environment.HandleTimeout);
 			EventingBasicConsumer consumer = new(model);
 
 			consumer.Received += (object sender, BasicDeliverEventArgs arguments) =>

@@ -21,7 +21,7 @@ namespace Dotnet.Chatroom
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			OpenApiInfo openApiInfo = new() { Title = "Dotnet.Chatroom", Version = $"v{AssemblyVersion}" };
+			OpenApiInfo openApiInfo = new() { Title = Environment.AppName, Version = $"v{AssemblyVersion}" };
 
 			services.AddControllers();
 			services.AddSwaggerGen(c => c.SwaggerDoc($"v{AssemblyVersion}", openApiInfo));
@@ -44,7 +44,7 @@ namespace Dotnet.Chatroom
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v{AssemblyVersion}/swagger.json", $"Dotnet.Chatroom v{AssemblyVersion}"));
+				app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v{AssemblyVersion}/swagger.json", $"{Environment.AppName} v{AssemblyVersion}"));
 			}
 
 			app.UseRouting();
