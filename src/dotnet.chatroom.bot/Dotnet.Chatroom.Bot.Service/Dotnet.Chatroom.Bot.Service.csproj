@@ -17,10 +17,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="RabbitMQ.Client" Version="6.2.4" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Dotnet.Chatroom.Abstractions\Dotnet.Chatroom.Abstractions.csproj" />
+		<PackageReference Include="Dotnet.Chatroom.Abstractions" Version="1.0.0" />
 	</ItemGroup>
 
 </Project>
