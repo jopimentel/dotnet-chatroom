@@ -15,7 +15,7 @@ namespace Dotnet.Chatroom.Controllers
 		/// <summary>
 		/// Allows to log a message and use it to identify when a certain operation occurs.
 		/// </summary>
-		private readonly ILogger<ChatsController> _logger;
+		private readonly ILogger<UsersController> _logger;
 		/// <summary>
 		/// Provides a set of methods that allows to manage the <see cref="User"/> entity. 
 		/// </summary>
@@ -26,7 +26,7 @@ namespace Dotnet.Chatroom.Controllers
 		/// </summary>
 		/// <param name="logger">An instance of <see cref="ILogger{TCategoryName}"/> used to write log messages.</param>
 		/// <param name="userService">The <see cref="IUserService"/> used to manage the <see cref="User"/> entity.</param>
-		public UsersController(ILogger<ChatsController> logger, IUserService userService)
+		public UsersController(ILogger<UsersController> logger, IUserService userService)
 		{
 			_logger = logger;
 			_userService = userService;

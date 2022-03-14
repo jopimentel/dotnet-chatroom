@@ -13,7 +13,7 @@ namespace Dotnet.Chatroom.Bot.Service
 		/// <summary>
 		/// Allows to log a message and use it to identify when a certain operation occurs.
 		/// </summary>
-		private readonly ILogger<StockService> _logger;
+		private readonly ILogger<RequestService> _logger;
 		/// <summary>
 		/// Provides a set of methods that allows to manage the <see cref="Request"/> entity. 
 		/// </summary>
@@ -34,7 +34,7 @@ namespace Dotnet.Chatroom.Bot.Service
 		/// <param name="context">Data obtained from the current context.</param>
 		/// <param name="requestRepository">The <see cref="IRequestRepository"/> used to manage the <see cref="Request"/> entity.</param>
 		/// <param name="model"><see cref="IModel"/> object used to publish a message requesting a stock quote.</param>
-		public RequestService(ILogger<StockService> logger, IApplicationContext context, IRequestRepository requestRepository, IModel model)
+		public RequestService(ILogger<RequestService> logger, IApplicationContext context, IRequestRepository requestRepository, IModel model)
 		{
 			_requestRepository = requestRepository;
 			_model = model;

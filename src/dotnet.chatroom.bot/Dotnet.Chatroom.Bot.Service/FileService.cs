@@ -14,7 +14,7 @@ namespace Dotnet.Chatroom.Bot.Service
 		/// <summary>
 		/// Allows to log a message and use it to identify when a certain operation occurs.
 		/// </summary>
-		private readonly ILogger<StockService> _logger;
+		private readonly ILogger<FileService> _logger;
 		/// <summary>
 		/// Provides a set of methods that allows to manage the files to be saved and query from MongoDB GridFS. 
 		/// </summary>
@@ -25,7 +25,7 @@ namespace Dotnet.Chatroom.Bot.Service
 		/// </summary>
 		/// <param name="logger">An instance of <see cref="ILogger{TCategoryName}"/> used to write log messages.</param>
 		/// <param name="fileRepository">The <see cref="IFileRepository"/> used to manage the files.</param>
-		public FileService(ILogger<StockService> logger, IFileRepository fileRepository)
+		public FileService(ILogger<FileService> logger, IFileRepository fileRepository)
 		{
 			_logger = logger;
 			_fileRepository = fileRepository;
