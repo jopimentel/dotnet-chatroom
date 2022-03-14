@@ -63,6 +63,7 @@ namespace Dotnet.Chatroom.Bot
 			{
 				_logger.LogError("An exception occured while requesting the stock quote of {stockCode}:", stockCode);
 				_logger.LogError("{message}", exception.GetBaseException().Message);
+				_logger.LogError("{stackTrace}", exception.GetBaseException().StackTrace);
 
 				return StatusCode((int)HttpStatusCode.InternalServerError, exception);
 			}

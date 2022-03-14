@@ -1,4 +1,5 @@
 ﻿using Dotnet.Chatroom.Bot.Repository;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace Dotnet.Chatroom.Bot.Service
@@ -9,6 +10,10 @@ namespace Dotnet.Chatroom.Bot.Service
 	/// <remarks>This class implements the <see cref="IRequestService"/> interface.</remarks>
 	public class RequestService : IRequestService
 	{
+		/// <summary>
+		/// Allows to log a message and use it to identify when a certain operation occurs.
+		/// </summary>
+		private readonly ILogger<StockService> _logger;
 		/// <summary>
 		/// Provides a set of methods that allows to manage the <see cref="Request"/> entity. 
 		/// </summary>
@@ -25,13 +30,15 @@ namespace Dotnet.Chatroom.Bot.Service
 		/// <summary>
 		/// Initializes a new instance of <see cref="RequestService"/> type.
 		/// </summary>
+		/// <param name="logger">An instance of <see cref="ILogger{TCategoryName}"/> used to write log messages.</param>
 		/// <param name="context">Data obtained from the current context.</param>
 		/// <param name="requestRepository">The <see cref="IRequestRepository"/> used to manage the <see cref="Request"/> entity.</param>
 		/// <param name="model"><see cref="IModel"/> object used to publish a message requesting a stock quote.</param>
-		public RequestService(IApplicationContext context, IRequestRepository requestRepository, IModel model)
+		public RequestService(ILogger<StockService> logger, IApplicationContext context, IRequestRepository requestRepository, IModel model)
 		{
 			_requestRepository = requestRepository;
 			_model = model;
+			_logger = logger;
 			_context = context;
 		}
 
@@ -49,8 +56,12 @@ namespace Dotnet.Chatroom.Bot.Service
 			string routingKey = Environment.StockQuoteIn;
 			string replayTo = Environment.StockQuoteOut;
 
+			_logger.LogInformation("Publishing the message requesting the stock quote");
+
 			// Publish the message requesting the stock quote
 			string correlationId = await _model.PublishAsync(dataTransferObject, routingKey, replayTo, cancellationToken);
+
+			_logger.LogInformation("The correlation id for the current request is: {correlationId}", correlationId);
 
 			Request request = new()
 			{
@@ -66,6 +77,7 @@ namespace Dotnet.Chatroom.Bot.Service
 			};
 
 			await _requestRepository.AddAsync(request, cancellationToken);
+			_logger.LogInformation("The request succesfully added to the database");
 
 			return correlationId;
 		}
