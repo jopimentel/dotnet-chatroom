@@ -45,8 +45,8 @@ namespace Dotnet.Chatroom.Tests
 
 		[Theory]
 		[InlineData("2c7a2a4f-7651-4026-9873-a21d26e95bcb", 150, 45)]
-		[InlineData("2c7a2a4f-7651-4026-9873-a21d26e95bcb", 25, 13)]
-		[InlineData("2c7a2a4f-7651-4026-9873-a21d26e95bcb", 100, 88)]
+		[InlineData("91bdbd3a-3b72-44c8-8d77-56e1abd4b1ce", 25, 13)]
+		[InlineData("51ebb7fb-5598-4920-9940-c9fa75457893", 100, 88)]
 		public async Task Should_Get_Chats_By_Audience_And_Just_Decrypt_String_Messages(string audience, int itemsPerPage, int amountOfStringMessages)
 		{
 			// Arrange

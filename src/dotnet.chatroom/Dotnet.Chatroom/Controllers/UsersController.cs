@@ -160,5 +160,43 @@ namespace Dotnet.Chatroom.Controllers
 				return StatusCode(500, exception.GetBaseException().Message);
 			}
 		}
+
+		/// <summary>
+		/// Allows to check if a given user can access to the application.
+		/// </summary>
+		/// <param name="username">The username or the email address.</param>
+		/// <param name="login">The required information to validate the user.</param>
+		/// <param name="cancellationToken">A <see cref="CancellationToken"/> instance which indicates that the operation should be canceled.</param>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
+		/// When the task completes, it contains the <see cref="Authorization"/> object which indicates whether or not the given user is authorized.
+		/// </returns>
+		[HttpPost("{username}/login")]
+		public async Task<IActionResult> LoginAsync([FromRoute] string username, [FromBody] UserLogin login, CancellationToken cancellationToken = default)
+		{
+			if (login == null)
+				return BadRequest(new ArgumentNullException(nameof(username)));
+
+			if (username != login.UsernameOrEmail)
+				return BadRequest();
+
+			try
+			{
+				Authorization authorization = await _userService.LoginAsync(login, cancellationToken);
+
+				if (!authorization.IsAuthorized)
+					return Unauthorized(authorization);
+
+				return Ok(authorization);
+			}
+			catch (Exception exception)
+			{
+				_logger.LogError("An exception occured while authentication the user {username}", username);
+				_logger.LogError("{message}", exception.GetBaseException().Message);
+				_logger.LogError("{stackTrace}", exception.GetBaseException().StackTrace);
+
+				return StatusCode(500, exception.GetBaseException().Message);
+			}
+		}
 	}
 }

@@ -23,13 +23,12 @@ export class ChatsComponent implements AfterViewInit {
   @Output('switch')
   public chatChange: EventEmitter<IChat>;
 
-
   constructor(
     private readonly service: ChatService,
-    private userService: UserService
+    private readonly userService: UserService
   ) {
-    this.chatsChange = new EventEmitter<Array<IChat>>()
-    this.chatChange = new EventEmitter<IChat>()
+    this.chatsChange = new EventEmitter<Array<IChat>>();
+    this.chatChange = new EventEmitter<IChat>();
   }
 
   public ngAfterViewInit(): void {

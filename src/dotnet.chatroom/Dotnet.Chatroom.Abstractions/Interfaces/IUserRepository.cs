@@ -28,5 +28,13 @@
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
 		Task<User> GetByIdAsync(string id, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="usernameOrEmail"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail, CancellationToken cancellationToken = default);
 	}
 }

@@ -1,0 +1,13 @@
+<div class="login">
+    <div class="media">
+        <h1 class="title">Welcome to Dotnet ChatRoom</h1>
+        <img class="avatar avatar-lg" src="assets/img/avatar.jpg">
+    </div>
+
+    <div class="inputs">
+        <input #user type="text" placeholder="username or email">
+        <input #password type="password" placeholder="password">
+    </div>
+
+    <button (click)="access(user.value, password.value)">Access</button>
+</div>

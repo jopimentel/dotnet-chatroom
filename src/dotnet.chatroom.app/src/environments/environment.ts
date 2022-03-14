@@ -10,6 +10,7 @@ export const environment = {
     hubs: 'http://localhost:25594/hub',
     requests: 'http://localhost:61360/api/requests/{stockCode}',
     user: 'http://localhost:25594/api/users/{id}',
-    messages: 'http://localhost:25594/api/chats/{audience}?itemsPerPage=50'
+    messages: 'http://localhost:25594/api/chats/{audience}?itemsPerPage=50',
+    login: 'http://localhost:25594/api/users/{username}/login'
   }
 };

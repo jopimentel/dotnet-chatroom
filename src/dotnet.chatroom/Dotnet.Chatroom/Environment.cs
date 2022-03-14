@@ -39,7 +39,7 @@ namespace Dotnet.Chatroom
 		/// <summary>
 		/// The url to the inner hub. This url allows to builds a <see cref="HubConnection"/> to invoke methods of <see cref="ChatsHub"/>.
 		/// </summary>
-		public static string MessageHub => "http://localhost:25594/hub/chats";
+		public static string MessageHub => Env.GetEnvironmentVariable("MESSAGES_HUB");
 		/// <summary>
 		/// The unique identifier of the bot. The bot is the one in charge of send the stock quote.
 		/// </summary>

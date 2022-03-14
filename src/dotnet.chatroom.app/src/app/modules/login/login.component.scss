@@ -1,0 +1,33 @@
+app-login {
+  display: flex;
+  justify-content: center;
+  padding-top: 7rem;
+
+  .login {
+    display: block;
+    text-align: center;
+
+    .media {
+      img {
+        margin-top: 1rem;
+      }
+    }
+
+    .inputs {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+
+      input {
+        margin-bottom: 1rem;
+        display: block;
+        line-height: 1.5rem;
+        width: 100%;
+      }
+    }
+
+    button {
+      margin-top: 2rem;
+      line-height: 1.5rem;
+    }
+  }
+}

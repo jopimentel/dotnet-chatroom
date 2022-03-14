@@ -23,4 +23,11 @@ export class UserService {
 
         return this.httpClient.get<IUser>(endpoint);
     }
+
+    public login(user: string, password: string): Observable<any> {
+        const url: string = environment.endpoints.login;
+        const endpoint: string = url.replace('{username}', user);
+
+        return this.httpClient.post<any>(endpoint, { usernameOrEmail: user, password });
+    }
 }

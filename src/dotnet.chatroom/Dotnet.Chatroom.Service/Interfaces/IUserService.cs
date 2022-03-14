@@ -38,5 +38,16 @@
 		/// When the task completes, it contains the requested user.
 		/// </returns>
 		Task<User> GetByIdAsync(string id, CancellationToken cancellationToken = default);
+
+		/// <summary>
+		/// Allows to check if a given user can access to the application.
+		/// </summary>
+		/// <param name="login">The required information to validate the user.</param>
+		/// <param name="cancellationToken">A <see cref="CancellationToken"/> instance which indicates that the operation should be canceled.</param>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
+		/// When the task completes, it contains an object of <see cref="Authorization"/> type.
+		/// </returns>
+		Task<Authorization> LoginAsync(UserLogin login, CancellationToken cancellationToken = default);
 	}
 }

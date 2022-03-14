@@ -89,6 +89,7 @@ services:
       BOT_IDENTIFIER: "00000000-0000-0000-0000-000000000000"
       BOT_NAME: stock-bot
       BOT_UNKNOWN_COMMAND_MESSAGE: I couldn't understand the specified command. But don't worry, you can use one of the following:{commands}Remember that the stock_code must be a valid one. For more information, see https://stooq.com/t/.
+      MESSAGES_HUB: http://localhost/hub/chats
     depends_on:
       - mssql
       - rabbitmq

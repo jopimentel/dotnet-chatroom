@@ -70,5 +70,19 @@ namespace Dotnet.Chatroom.Repository
 		{
 			return _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 		}
+
+		/// <summary>
+		/// Gets a single user by its username or email address.
+		/// </summary>
+		/// <param name="usernameOrEmail">The username or email address of the user.</param>
+		/// <param name="cancellationToken">A <see cref="CancellationToken"/> instance which indicates that the operation should be canceled.</param>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
+		/// When the task completes, it contains the requested user.
+		/// </returns>
+		public virtual Task<User> GetByUsernameOrEmailAsync(string usernameOrEmail, CancellationToken cancellationToken = default)
+		{
+			return _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail, cancellationToken);
+		}
 	}
 }

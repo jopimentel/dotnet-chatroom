@@ -81,5 +81,24 @@ namespace Dotnet.Chatroom.Service
 		{
 			return _userRespository.GetByIdAsync(id, cancellationToken);
 		}
+
+		/// <summary>
+		/// Allows to check if a given user can access to the application.
+		/// </summary>
+		/// <param name="login">The required information to validate the user.</param>
+		/// <param name="cancellationToken">A <see cref="CancellationToken"/> instance which indicates that the operation should be canceled.</param>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
+		/// When the task completes, it contains a boolean value indicating whether or not the user can access.
+		/// </returns>
+		public async Task<Authorization> LoginAsync(UserLogin login, CancellationToken cancellationToken = default)
+		{
+			User user = await _userRespository.GetByUsernameOrEmailAsync(login.UsernameOrEmail, cancellationToken);
+
+			if (user == null)
+				return new Authorization(Guid.Empty.ToString(), false);
+
+			return new Authorization(user.Id, user.Password == login.Password);
+		}
 	}
 }

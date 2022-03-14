@@ -1,0 +1,13 @@
+<ng-container *ngIf="!loading">
+    <ng-container *ngIf="alert.message">
+        <div class="alert alert-{{alertType(alert)}}">{{alert.message}}</div>
+    </ng-container>
+
+    <div class="logged">{{user?.name}} ({{user?.username}})</div>
+
+    <div class="dotnet-chatroom" *ngIf="user">
+        <app-chats [user]="user" (switch)="switchChat($event)"></app-chats>
+        <app-messages #messages [chat]="currentChat" [user]="user" (alert)="showAlert($event)"></app-messages>
+        <app-users-in-chat [chat]="currentChat"></app-users-in-chat>
+    </div>
+</ng-container>
