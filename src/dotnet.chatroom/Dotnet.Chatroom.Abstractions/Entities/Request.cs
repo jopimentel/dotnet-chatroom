@@ -1,25 +1,17 @@
 ﻿namespace Dotnet.Chatroom
 {
 	/// <summary>
-	/// 
+	/// The entity which defines the request object.
 	/// </summary>
-	public class Request
+	public class Request : Entity
 	{
 		/// <summary>
-		/// 
-		/// </summary>
-		public string Id { get; set; }
-		/// <summary>
-		/// 
+		/// The information of the executed command.
 		/// </summary>
 		public Command Command { get; set; }
 		/// <summary>
-		/// 
+		/// Indicates whom the result of the executed command will be delivered to.
 		/// </summary>
 		public string Audience { get; set; }
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTimeOffset Date { get; set; }
 	}
 }

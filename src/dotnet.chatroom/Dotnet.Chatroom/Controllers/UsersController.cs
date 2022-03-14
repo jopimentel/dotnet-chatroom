@@ -125,7 +125,10 @@ namespace Dotnet.Chatroom.Controllers
 		/// </summary>
 		/// <param name="id">The unique identifier of the user.</param>
 		/// <param name="cancellationToken">A <see cref="CancellationToken"/> instance which indicates that the operation should be canceled.</param>
-		/// <returns></returns>
+		/// <returns>
+		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
+		/// When the task completes, it contains the requested user.
+		/// </returns>
 		[HttpGet("{id:guid}")]
 		public async Task<IActionResult> GetByIdAsync([FromRoute] string id, CancellationToken cancellationToken = default)
 		{

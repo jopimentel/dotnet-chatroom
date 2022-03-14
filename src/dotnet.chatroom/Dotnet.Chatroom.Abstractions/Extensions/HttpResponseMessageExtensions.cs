@@ -3,7 +3,7 @@
 namespace Dotnet.Chatroom
 {
 	/// <summary>
-	/// Extends the <see cref="HttpResponseMessage"/> types by adding additional functionalities.
+	/// Extends the <see cref="HttpResponseMessage"/> type by adding additional functionalities.
 	/// </summary>
 	public static class HttpResponseMessageExtensions
 	{

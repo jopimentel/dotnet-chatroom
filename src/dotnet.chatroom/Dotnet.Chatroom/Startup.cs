@@ -83,6 +83,7 @@ namespace Dotnet.Chatroom
 		/// <param name="services">The <see cref="IServiceCollection"/> instance to be used to register the services.</param>
 		private void RegisterDependencies(IServiceCollection services)
 		{
+			services.AddEncryptor();
 			services.AddApplicationContext();
 			services.AddScoped(_ =>
 			{

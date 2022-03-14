@@ -8,7 +8,7 @@ using System.Text.Json;
 namespace Dotnet.Chatroom
 {
 	/// <summary>
-	/// Extends the <see cref="RabbitMQBuilder"/> types by adding additional functionalities.
+	/// Extends the <see cref="RabbitMQBuilder"/> type by adding additional functionalities.
 	/// </summary>
 	public static class RabbitMQBuilderExtensions
 	{

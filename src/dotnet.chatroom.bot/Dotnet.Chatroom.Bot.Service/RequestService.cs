@@ -54,12 +54,12 @@ namespace Dotnet.Chatroom.Bot.Service
 		public async Task<string> AddAsync(RequestStockQuote dataTransferObject, CancellationToken cancellationToken = default)
 		{
 			string routingKey = Environment.StockQuoteIn;
-			string replayTo = Environment.StockQuoteOut;
+			string replyTo = Environment.StockQuoteOut;
 
 			_logger.LogInformation("Publishing the message requesting the stock quote");
 
 			// Publish the message requesting the stock quote
-			string correlationId = await _model.PublishAsync(dataTransferObject, routingKey, replayTo, cancellationToken);
+			string correlationId = await _model.PublishAsync(dataTransferObject, routingKey, replyTo, cancellationToken);
 
 			_logger.LogInformation("The correlation id for the current request is: {correlationId}", correlationId);
 

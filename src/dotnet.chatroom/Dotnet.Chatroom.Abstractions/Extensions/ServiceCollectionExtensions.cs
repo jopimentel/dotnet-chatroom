@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 namespace Dotnet.Chatroom
 {
 	/// <summary>
-	/// Extends the <see cref="IServiceCollection"/> types by adding additional functionalities.
+	/// Extends the <see cref="IServiceCollection"/> type by adding additional functionalities.
 	/// </summary>
 	public static class ServiceCollectionExtensions
 	{
@@ -70,6 +70,31 @@ namespace Dotnet.Chatroom
 			services.Add(new ServiceDescriptor(typeof(IConnection), _ => factory.CreateConnection(), ServiceLifetime.Singleton));
 
 			return new RabbitMQBuilder(services, lifetime);
+		}
+
+		/// <summary>
+		/// Adds a custom implementation of the <see cref="IEncryptor"/> interface.
+		/// </summary>
+		/// <typeparam name="TEncryptor">Represents the type of the custom implementation of the <see cref="IEncryptor"/> interface.</typeparam>
+		/// <param name="services">The <see cref="IServiceCollection"/> instance to be used to register the encryptor.</param>
+		/// <param name="lifetime">Specifies the lifetime of the encryptor in the <see cref="IServiceCollection"/>.</param>
+		/// <returns>The same instance of <see cref="IServiceCollection"/> type used to register the <see cref="IEncryptor"/>.</returns>
+		public static IServiceCollection AddEncryptor<TEncryptor>(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped) where TEncryptor : IEncryptor
+		{
+			services.Add(new ServiceDescriptor(typeof(IEncryptor), typeof(TEncryptor), lifetime));
+
+			return services;
+		}
+
+		/// <summary>
+		/// Adds the default implementation of the <see cref="IEncryptor"/> interface.
+		/// </summary>
+		/// <param name="services">The <see cref="IServiceCollection"/> instance to be used to register the encryptor.</param>
+		/// <param name="lifetime">Specifies the lifetime of the encryptor in the <see cref="IServiceCollection"/>.</param>
+		/// <returns>The same instance of <see cref="IServiceCollection"/> type used to register the <see cref="Encryptor"/>.</returns>
+		public static IServiceCollection AddEncryptor(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+		{
+			return AddEncryptor<Encryptor>(services, lifetime);
 		}
 	}
 }
