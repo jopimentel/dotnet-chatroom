@@ -32,6 +32,7 @@ namespace Dotnet.Chatroom.Service
 		/// <exception cref="NotImplementedException"></exception>
 		public Task<int> AddAsync(Chat chat, CancellationToken cancellationToken = default)
 		{
+			// TODO: Allow to attach users to the created chat
 			chat.Created = DateTimeOffset.UtcNow;
 
 			return _chatRespository.AddAsync(chat, cancellationToken);

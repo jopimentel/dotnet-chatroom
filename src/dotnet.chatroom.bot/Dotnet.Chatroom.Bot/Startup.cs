@@ -11,7 +11,7 @@ namespace Dotnet.Chatroom.Bot
 	public class Startup
 	{
 		/// <summary>
-		/// 
+		/// Gets the version of the current assembly.
 		/// </summary>
 		public string AssemblyVersion => GetType().Assembly.GetName().Version.ToString();
 		/// <summary>

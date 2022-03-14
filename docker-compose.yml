@@ -87,6 +87,10 @@ services:
       HANDLE_TIMOUT: 60000
       MSSQL_CONNECTION_STRING: Server=mssql,1433; Database=ChatRoom; Integrated Security=False; User Id=sa; Password=MSSQL@admin1;
       BOT_IDENTIFIER: "00000000-0000-0000-0000-000000000000"
+      BOT_NAME: stock-bot
+      BOT_UNKNOWN_COMMAND_MESSAGE: 
+        I couldn't understand the specified command. But don't worry, you can use one of the following:{commands}
+        Remember that the stock_code must be a valid one. For more information, see https://stooq.com/t/.
     depends_on:
       - mssql
       - rabbitmq

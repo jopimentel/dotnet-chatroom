@@ -11,7 +11,7 @@
         <div class="message" [ngClass]="{'sender': message.emitter == user?.id, 'command': message.type == messageType.command}">
             <div class="inner-message ">
                 <div class="emitter">
-                    <div class="name">{{ message.emitter == environment.bot ? 'bot': message?.emitterName}}</div>
+                    <div class="name">{{message.emitterName}}</div>
                     <div class="time">{{message.created | date:'h:mm a'}}</div>
                 </div>
                 <div class="content" *ngIf="message.type == messageType.command; else noStock">

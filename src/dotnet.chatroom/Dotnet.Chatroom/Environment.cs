@@ -1,4 +1,5 @@
-﻿using Env = System.Environment;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Env = System.Environment;
 
 namespace Dotnet.Chatroom
 {
@@ -32,16 +33,24 @@ namespace Dotnet.Chatroom
 		/// </summary>
 		public static string StockQuoteOut => Env.GetEnvironmentVariable("QUEUE_STOCK_QUOTE_OUT");
 		/// <summary>
-		/// 
+		/// The connection string for the mssql database.
 		/// </summary>
 		public static string MSSQLConnectionString => Env.GetEnvironmentVariable("MSSQL_CONNECTION_STRING");
 		/// <summary>
-		/// 
+		/// The url to the inner hub. This url allows to builds a <see cref="HubConnection"/> to invoke methods of <see cref="ChatsHub"/>.
 		/// </summary>
 		public static string MessageHub => "http://localhost/hub/chats";
 		/// <summary>
-		/// 
+		/// The unique identifier of the bot. The bot is the one in charge of send the stock quote.
 		/// </summary>
 		public static string Bot => Env.GetEnvironmentVariable("BOT_IDENTIFIER");
+		/// <summary>
+		/// A friendly name for the <see cref="Bot"/>.
+		/// </summary>
+		public static string BotName => Env.GetEnvironmentVariable("BOT_NAME");
+		/// <summary>
+		/// A friendly description to be provided when the bot doesn't understand the command.
+		/// </summary>
+		public static string UnknownCommandMessage => Env.GetEnvironmentVariable("BOT_UNKNOWN_COMMAND_MESSAGE");
 	}
 }

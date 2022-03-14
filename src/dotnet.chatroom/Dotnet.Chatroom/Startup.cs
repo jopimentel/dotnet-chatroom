@@ -1,24 +1,39 @@
 ﻿using Dotnet.Chatroom.Repository;
 using Dotnet.Chatroom.Service;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 
 namespace Dotnet.Chatroom
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class Startup
 	{
+		/// <summary>
+		/// Gets the version of the current assembly.
+		/// </summary>
 		public string AssemblyVersion => GetType().Assembly.GetName().Version.ToString();
+		/// <summary>
+		/// 
+		/// </summary>
 		public IConfiguration Configuration { get; }
 
-		public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="configuration"></param>
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="services"></param>
 		public void ConfigureServices(IServiceCollection services)
 		{
 			OpenApiInfo openApiInfo = new() { Title = Environment.AppName, Version = $"v{AssemblyVersion}" };
@@ -37,7 +52,11 @@ namespace Dotnet.Chatroom
 			services.AddCors(policy => policy.AddPolicy("cors", p => p.WithOrigins(Environment.Origins).AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="env"></param>
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
@@ -65,6 +84,14 @@ namespace Dotnet.Chatroom
 		private void RegisterDependencies(IServiceCollection services)
 		{
 			services.AddApplicationContext();
+			services.AddScoped(_ =>
+			{
+				return new HubConnectionBuilder()
+					.WithUrl(Environment.MessageHub)
+					.ConfigureLogging(logging => logging.AddConsole())
+					.WithAutomaticReconnect()
+					.Build();
+			});
 
 			// MongoDB
 			services.AddMongoClient(Environment.MongoConnectionString);

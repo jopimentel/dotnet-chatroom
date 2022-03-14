@@ -22,7 +22,7 @@ namespace Dotnet.Chatroom
 		/// </summary>
 		private readonly ILogger<StockQuoteHandler> _logger;
 		/// <summary>
-		/// 
+		/// Allows to inkove mehtos defined in the <see cref="ChatsHub"/>.
 		/// </summary>
 		private readonly HubConnection _hub;
 
@@ -30,14 +30,15 @@ namespace Dotnet.Chatroom
 		/// Initializes a new instance of <see cref="StockQuoteHandler"/> type.
 		/// </summary>
 		/// <param name="logger">An instance of <see cref="ILogger{TCategoryName}"/> used to write log messages.</param>
-		public StockQuoteHandler(ILogger<StockQuoteHandler> logger)
+		/// <param name="hub">The <see cref="HubConnection"/> object to be used to invoke methods of a websocket.</param>
+		public StockQuoteHandler(ILogger<StockQuoteHandler> logger, HubConnection hub)
 		{
 			_logger = logger;
-			_hub = BuilHubConnection(Environment.MessageHub);
-		} 
+			_hub = hub;
+		}
 
 		/// <summary>
-		/// Handles the received message and makes the request to the stooq api.
+		/// Handles the received message and sends the <see cref="Stock"/> object to the <see cref="ChatsHub"/>.
 		/// </summary>
 		/// <param name="data">The content of the message passed through RabbitMQ.</param>
 		/// <param name="model"><see cref="IModel"/> object used to acknowledge the message.</param>
@@ -56,6 +57,8 @@ namespace Dotnet.Chatroom
 					await _hub.StartAsync(cancellationToken);
 
 				await _hub.InvokeCoreAsync("InvokeStock", new[] { data }, cancellationToken);
+
+				_logger.LogInformation("The stock information of {symbol} was sent sucesfully to the hub", data.Symbol);
 			}
 			catch (Exception exception)
 			{
@@ -64,15 +67,6 @@ namespace Dotnet.Chatroom
 			}
 
 			model.BasicAck(deliveryTag, multiple: false);
-		}
-
-		private static HubConnection BuilHubConnection(string url)
-		{
-			return new HubConnectionBuilder()
-				.WithUrl(url)
-				.ConfigureLogging(logging => logging.AddConsole())
-				.WithAutomaticReconnect()
-				.Build();
 		}
 	}
 }
