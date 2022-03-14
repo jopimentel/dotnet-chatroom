@@ -1,0 +1,31 @@
+<div class="controls">
+    <input #text type="text" (keydown.enter)="send(text.value)">
+    <button class="cursor-pointer" (click)="send(text.value)">Send</button>
+</div>
+
+<div class="messages" [ngClass]="{'empty': messages.length <= 0}">
+    <ng-container *ngIf="messages.length <= 0">
+        There are not messages to show!
+    </ng-container>
+    <ng-container *ngFor="let message of messages">
+        <div class="message" [ngClass]="{'sender': message.emitter == user?.id, 'command': message.type == messageType.command}">
+            <div class="inner-message ">
+                <div class="emitter">
+                    <div class="name">{{ message.emitter == environment.bot ? 'bot': message?.emitterName}}</div>
+                    <div class="time">{{message.created | date:'h:mm a'}}</div>
+                </div>
+                <div class="content" *ngIf="message.type == messageType.command; else noStock">
+                    {{getCommandContent(message.content)}}
+                </div>
+                <ng-template #noStock>
+                    <div class="content">{{message.content}}</div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<div class="header">
+    <img class="avatar" src="assets/img/avatar.jpg">
+    <div class="chatname">{{chat?.name}}</div>
+</div>

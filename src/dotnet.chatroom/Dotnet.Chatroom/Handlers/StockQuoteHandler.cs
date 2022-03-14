@@ -34,7 +34,7 @@ namespace Dotnet.Chatroom
 		{
 			_logger = logger;
 			_hub = BuilHubConnection(Environment.MessageHub);
-		}
+		} 
 
 		/// <summary>
 		/// Handles the received message and makes the request to the stooq api.

@@ -33,7 +33,8 @@
         "RABBITMQ_URI": "amqp://sysadmin:rabbitmq%401@localhost:5672/chatroom",
         "QUEUE_STOCK_QUOTE_OUT": "bot::stock.quote.out",
         "HANDLE_TIMOUT": "60000",
-        "MSSQL_CONNECTION_STRING": "Server=localhost,1434; Database=master; Integrated Security=False; User Id=sa; Password=MSSQL@admin1;"
+        "MSSQL_CONNECTION_STRING": "Server=localhost,1434; Database=ChatRoom; Integrated Security=False; User Id=sa; Password=MSSQL@admin1;",
+        "BOT_IDENTIFIER": "00000000-0000-0000-0000-000000000000"
       }
     },
     "Docker": {

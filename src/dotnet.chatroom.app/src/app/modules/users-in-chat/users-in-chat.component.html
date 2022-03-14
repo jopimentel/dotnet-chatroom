@@ -1,0 +1,6 @@
+<div class="users" [ngClass]="{'hidden': chat?.type != chatType.chatroom}">
+    <div class="title">Members of {{chat?.name}} ({{users.length}}):</div>
+    <ng-container *ngFor="let user of users">
+        <div>{{user.name}}</div>
+    </ng-container>
+</div>

@@ -46,6 +46,10 @@ namespace Dotnet.Chatroom
 		/// <summary>
 		/// 
 		/// </summary>
-		public static string MessageHub => "http://localhost:25594/hub/messages";
+		public static string MessageHub => "http://localhost:25594/hub/chats";
+		/// <summary>
+		/// 
+		/// </summary>
+		public static string Bot => Env.GetEnvironmentVariable("BOT_IDENTIFIER");
 	}
 }

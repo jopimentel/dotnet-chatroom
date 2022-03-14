@@ -1,7 +1,25 @@
 ﻿namespace Dotnet.Chatroom
 {
-	public class Message
+	/// <summary>
+	/// 
+	/// </summary>
+	public class Message : Entity
 	{
-
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Emitter { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public string EmitterName { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Audience { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public MessageType Type { get; set; }
 	}
 }

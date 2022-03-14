@@ -19,6 +19,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Dotnet.Chatroom.Abstractions\Dotnet.Chatroom.Abstractions.csproj" />
 		<ProjectReference Include="..\Dotnet.Chatroom.Repository\Dotnet.Chatroom.Repository.csproj" />
+		<ProjectReference Include="..\Dotnet.Chatroom.Service\Dotnet.Chatroom.Service.csproj" />
 	</ItemGroup>
 
 </Project>

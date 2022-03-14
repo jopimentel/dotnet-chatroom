@@ -11,6 +11,15 @@ namespace Dotnet.Chatroom.Repository
 		/// <summary>
 		/// 
 		/// </summary>
+		public DbSet<User> Users { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public DbSet<Chat> Chats { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="options"></param>
 		public ChatroomContext(DbContextOptions<ChatroomContext> options) : base(options) { }
 

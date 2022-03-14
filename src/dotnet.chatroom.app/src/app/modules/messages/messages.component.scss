@@ -1,0 +1,91 @@
+app-messages {
+  width: 40%;
+  flex-flow: column-reverse;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-right: 1rem;
+
+  .controls {
+    text-align: right;
+
+    button {
+      line-height: 1.5rem;
+      margin-left: 6px;
+    }
+
+    input {
+      line-height: 1.5rem;
+      width: 70%;
+    }
+  }
+
+  .messages {
+    height: 100%;
+    flex-flow: column-reverse;
+    display: flex;
+    margin-top: 1rem;
+    overflow-y: auto;
+    contain: content;
+
+    >div {
+      line-height: 13px;
+    }
+
+    &.empty {
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .message {
+      width: 100%;
+      display: flex;
+
+      .inner-message {
+        padding: 12px;
+        background-color: #6a9fe4;
+        border-radius: 4px;
+        color: black;
+        margin: 9px 0;
+        width: 50%;
+
+        .emitter {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 14px;
+          font-weight: bold;
+        }
+
+        .content {
+          line-height: 1.5;
+        }
+      }
+
+      &.sender {
+        flex-flow: row-reverse;
+
+        .inner-message {
+          background: #cef9ce;
+        }
+      }
+
+      &.command {
+        .inner-message {
+          background-color: #919191;
+        }
+      }
+    }
+
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    .chatname {
+      margin-left: 8px;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<div class="chats">
+    <div class="search">
+        <input #search type="text">
+        <button (click)="add(search.value)">New Chat</button>
+    </div>
+    <app-chat-list [chats]="chats" (switch)="switchTo($event)"></app-chat-list>
+</div>

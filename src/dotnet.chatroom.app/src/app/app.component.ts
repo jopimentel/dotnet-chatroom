@@ -1,63 +1,55 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import { from, tap } from 'rxjs';
-import { environment } from '../environments/environment';
-import { IStockQuoteRequest } from './stock-quote-request';
+import { Component, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { filter, map, Subscription, switchMap, tap } from 'rxjs';
+import { IAlert } from './modules/entities/alert.model';
+import { IChat } from './modules/entities/chat.model';
+import { IUser } from './modules/entities/user.mode';
+import { AlertType } from './modules/enums/alert-type.enum';
+import { MessagesComponent } from './modules/messages/messages.component';
+import { UserService } from './modules/services/user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements OnDestroy {
 
-  public messages: Array<any> = [];
-  public readonly connection: HubConnection = new HubConnectionBuilder()
-    .withUrl('http://localhost:25594/hub/messages')
-    .configureLogging(LogLevel.Information)
-    .withAutomaticReconnect([10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 55000, 60000])
-    .build();
+  @ViewChild('messages', { static: false })
+  public messages?: MessagesComponent;
+  public user?: IUser;
+  public currentChat?: IChat;
+  public alert: IAlert = {};
+  private subscription: Subscription;
 
-  constructor(private readonly httpClient: HttpClient) { }
-
-  public ngAfterViewInit(): void {
-    from(this.connection.start())
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly userService: UserService
+  ) {
+    this.subscription = this.route.queryParams
       .pipe(
-        tap(() => this.subscribeToMessages())
+        map(query => query['user']),
+        filter(user => user),
+        switchMap((user: string) => this.userService.getById(user)),
+        tap(user => this.user = user)
       ).subscribe();
   }
 
   public ngOnDestroy(): void {
-    this.connection.stop();
+    this.subscription.unsubscribe();
   }
 
-  private subscribeToMessages(): void {
-    this.connection.on('messages-1', message => {
-      console.log(message);
-      this.messages.push(message);
-    });
+  public showAlert(alert: IAlert): void {
+    this.alert = alert;
   }
 
-  public request(message: string): void {
-    const command = environment.commands.filter(c => this.isCommand(message, c))[0];
-
-    if (!command)
-      console.log(`${message} isn't a valid command.`);
-
-    const body: IStockQuoteRequest = {
-      stockCode: message.replace(command, ''),
-      action: command
-    };
-    const url: string = `http://localhost:8082/api/requests/${body.stockCode}`;
-
-    this.httpClient.post(url, body)
-      .pipe(
-        tap(r => console.log(r))
-      ).subscribe();
+  public alertType(alert: IAlert): string {
+    return alert.type == AlertType.error ? 'error' : 'info';
   }
 
-  private isCommand(value: string, command: string): boolean {
-    return new RegExp(`^${command}`).test(value);
+  public switchChat(chat: IChat): void {
+    this.currentChat = chat;
+    this.messages?.reset();
   }
 }

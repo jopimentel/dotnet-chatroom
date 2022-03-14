@@ -1,34 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin-top: 3rem;
+}
 
 app-root {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
   width: 100%;
 
-  .chat {
-    display: block;
+  .alert {
+    padding: 1rem;
 
-    .controls {
-      button {
-        margin-left: 6px;
-      }
-    }
-
-    .messages {
-      margin-top: 1rem;
-
-      >div {
-        line-height: 13px;
-      }
-
-      .command {
-        padding: 4px;
-        background-color: #919191;
-        border-radius: 4px;
-        color: white;
-        margin: 9px 0;
-      }
+    &.alert-error {
+      color: #ff0062;
     }
   }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+img.avatar {
+  width: 35px;
+  border-radius: 100%;
+}
+
+.hidden {
+  visibility: hidden;
 }

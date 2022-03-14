@@ -1,0 +1,50 @@
+.users {
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-right: 1rem;
+  padding: 1rem;
+
+  .title {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  app-chat-list {
+    .chat-list {
+
+      img {
+        width: 35px;
+        border-radius: 100%;
+      }
+
+      div.chat {
+
+        &.chatroom {
+          background-color: #87efa2;
+          border-color: #87efa2;
+        }
+
+        &:not(.chatroom) {
+          border-color: black;
+        }
+
+        margin-top: 8px;
+        border: 1px solid;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 4px;
+        padding: 8px;
+
+        .chat-media {
+          display: flex;
+          align-items: center;
+
+          .chatname {
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  }
+}

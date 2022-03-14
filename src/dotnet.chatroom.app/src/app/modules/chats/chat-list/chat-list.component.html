@@ -1,0 +1,10 @@
+<div class="chat-list">
+    <ng-container *ngFor="let chat of chats">
+        <div class="chat cursor-pointer" [ngClass]="{'chatroom': chat.type == chatType.chatroom}" (click)="switchTo(chat)">
+            <div class="chat-media">
+                <img class="avatar" src="assets/img/avatar.jpg">
+                <div class="chatname">{{chat.name}}</div>
+            </div>
+        </div>
+    </ng-container>
+</div>

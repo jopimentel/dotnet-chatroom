@@ -1,12 +1,11 @@
-<div class="chat">
-  <div class="controls">
-    <input #text type="text">
-    <button (click)="request(text.value)">Send</button>
-  </div>
+<ng-container *ngIf="alert.message">
+  <div class="alert alert-{{alertType(alert)}}">{{alert.message}}</div>
+</ng-container>
 
-  <div class="messages">
-    <ng-container *ngFor="let message of messages">
-      <div class="command">{{message.symbol | uppercase}} quote is {{message.close | currency:'':'symbol':'0.2-2'}} per share</div>
-    </ng-container>
-  </div>
+<div class="logged">{{user?.name}} ({{user?.username}})</div>
+
+<div class="dotnet-chatroom" *ngIf="user">
+  <app-chats [user]="user" (switch)="switchChat($event)"></app-chats>
+  <app-messages #messages [chat]="currentChat" [user]="user" (alert)="showAlert($event)"></app-messages>
+  <app-users-in-chat [chat]="currentChat"></app-users-in-chat>
 </div>
