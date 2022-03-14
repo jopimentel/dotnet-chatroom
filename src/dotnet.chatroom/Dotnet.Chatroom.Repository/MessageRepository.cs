@@ -32,7 +32,7 @@ namespace Dotnet.Chatroom.Repository
 		/// <param name="message">The message to be added.</param>
 		/// <param name="cancellationToken">A <see cref="CancellationToken"/> instance which indicates that the operation should be canceled.</param>
 		/// <returns>A <see cref="Task{TResult}"/> that indicates the completation of the operation.</returns>
-		public Task AddAsync<T>(Message<T> message, CancellationToken cancellationToken = default)
+		public virtual Task AddAsync<T>(Message<T> message, CancellationToken cancellationToken = default)
 		{
 			IMongoCollection<Message> messages = _mongodb.GetCollection<Message>(_collection);
 
@@ -50,7 +50,7 @@ namespace Dotnet.Chatroom.Repository
 		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
 		/// When the task completes, it contains the requested messages produced by the given audience.
 		/// </returns>
-		public Task<List<Message<object>>> GetByAudienceAsync(string audience, int itemsPerPage = 50, CancellationToken cancellationToken = default)
+		public virtual Task<List<Message<object>>> GetByAudienceAsync(string audience, int itemsPerPage = 50, CancellationToken cancellationToken = default)
 		{
 			IMongoCollection<Message<object>> messages = _mongodb.GetCollection<Message<object>>(_collection);
 

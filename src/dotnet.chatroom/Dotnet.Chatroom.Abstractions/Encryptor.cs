@@ -13,7 +13,7 @@ namespace Dotnet.Chatroom
 		/// <param name="value"></param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public string Decrypt(string value)
+		public virtual string Decrypt(string value)
 		{
 			try
 			{
@@ -33,7 +33,7 @@ namespace Dotnet.Chatroom
 		/// <param name="value"></param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public string Encrypt(string value)
+		public virtual string Encrypt(string value)
 		{
 			try
 			{

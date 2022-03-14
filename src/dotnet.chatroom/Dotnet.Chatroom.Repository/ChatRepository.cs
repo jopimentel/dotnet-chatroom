@@ -29,7 +29,7 @@
 		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
 		/// When the task completes, it contains the amount of entities affected by the operation.
 		/// </returns>
-		public Task<int> AddAsync(Chat chat, CancellationToken cancellationToken = default)
+		public virtual Task<int> AddAsync(Chat chat, CancellationToken cancellationToken = default)
 		{
 			_context.Chats.Add(chat);
 

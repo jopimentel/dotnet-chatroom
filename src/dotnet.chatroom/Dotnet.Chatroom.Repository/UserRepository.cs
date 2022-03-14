@@ -31,7 +31,7 @@ namespace Dotnet.Chatroom.Repository
 		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
 		/// When the task completes, it contains the amount of entities affected by the operation.
 		/// </returns>
-		public Task<int> AddAsync(User user, CancellationToken cancellationToken = default)
+		public virtual Task<int> AddAsync(User user, CancellationToken cancellationToken = default)
 		{
 			_context.Users.Add(user);
 
@@ -47,7 +47,7 @@ namespace Dotnet.Chatroom.Repository
 		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
 		/// When the task completes, it contains the requested chats.
 		/// </returns>
-		public Task<List<Chat>> GetChatsAsync(string userId, CancellationToken cancellationToken = default)
+		public virtual Task<List<Chat>> GetChatsAsync(string userId, CancellationToken cancellationToken = default)
 		{
 			return _context.Users.AsNoTracking()
 				.Include("Chats.Users")
@@ -66,7 +66,7 @@ namespace Dotnet.Chatroom.Repository
 		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
 		/// When the task completes, it contains the requested user.
 		/// </returns>
-		public Task<User> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+		public virtual Task<User> GetByIdAsync(string id, CancellationToken cancellationToken = default)
 		{
 			return _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 		}
