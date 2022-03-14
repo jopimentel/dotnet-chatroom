@@ -57,7 +57,7 @@ namespace Dotnet.Chatroom.Bot
 			string correlationId = arguments.BasicProperties.CorrelationId;
 			string replyTo = arguments.BasicProperties.ReplyTo;
 			ulong deliveryTag = arguments.DeliveryTag;
-			
+
 			_logger.LogInformation("Getting {stockCode} stock quote from the stooq api", data.StockCode);
 
 			try
@@ -119,7 +119,6 @@ namespace Dotnet.Chatroom.Bot
 		/// A <see cref="Task{TResult}"/> that indicates the completation of the operation.
 		/// When the task completes, it contains the content of the stooq api response.
 		/// </returns>
-		/// <exception cref="InvalidOperationException"/>
 		private async Task<StooqResponse> ReadStreamAsync(Stream stream, CancellationToken cancellationToken = default)
 		{
 			_logger.LogInformation("Reading stream that contains the stooq api response");
@@ -133,25 +132,34 @@ namespace Dotnet.Chatroom.Bot
 
 			cancellationToken.ThrowIfCancellationRequested();
 
-			// TODO: Return empty Stooq Response to indicate the user something went wrong
 			if (string.IsNullOrWhiteSpace(fileContent))
-				throw new InvalidOperationException();
+				return new StooqResponse();
 
 			// Gets the second line of the file and parse the content
 			string data = fileContent.Split('\n')[1];
 			string[] stock = data.Split(',');
 
-			return new StooqResponse()
+			if (string.IsNullOrWhiteSpace(stock[0]))
+				return new StooqResponse();
+
+			try
 			{
-				Symbol = stock[0],
-				Date = DateTime.Parse(stock[1]),
-				Time = TimeSpan.Parse(stock[2]),
-				Open = decimal.Parse(stock[3]),
-				High = decimal.Parse(stock[4]),
-				Low = decimal.Parse(stock[5]),
-				Close = decimal.Parse(stock[6]),
-				Volume = long.Parse(stock[7])
-			};
+				return new StooqResponse()
+				{
+					Symbol = stock[0],
+					Date = DateTime.Parse(stock[1]),
+					Time = TimeSpan.Parse(stock[2]),
+					Open = decimal.Parse(stock[3]),
+					High = decimal.Parse(stock[4]),
+					Low = decimal.Parse(stock[5]),
+					Close = decimal.Parse(stock[6]),
+					Volume = long.Parse(stock[7])
+				};
+			}
+			catch (Exception)
+			{
+				return new StooqResponse();
+			}
 		}
 	}
 }

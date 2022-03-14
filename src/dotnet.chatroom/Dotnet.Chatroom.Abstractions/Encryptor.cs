@@ -13,11 +13,18 @@ namespace Dotnet.Chatroom
 		/// <param name="value"></param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public string Decryt(string value)
+		public string Decrypt(string value)
 		{
-			byte[] passwordBytes = Convert.FromBase64String(value); 
+			try
+			{
+				byte[] passwordBytes = Convert.FromBase64String(value);
 
-			return Encoding.UTF8.GetString(passwordBytes);
+				return Encoding.UTF8.GetString(passwordBytes);
+			}
+			catch (Exception)
+			{
+				return value;
+			}
 		}
 
 		/// <summary>
@@ -26,11 +33,18 @@ namespace Dotnet.Chatroom
 		/// <param name="value"></param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public string Encryt(string value)
+		public string Encrypt(string value)
 		{
-			byte[] passwordBytes = Encoding.UTF8.GetBytes(value);
+			try
+			{
+				byte[] passwordBytes = Encoding.UTF8.GetBytes(value);
 
-			return Convert.ToBase64String(passwordBytes);
+				return Convert.ToBase64String(passwordBytes);
+			}
+			catch (Exception)
+			{
+				return value;
+			}
 		}
 	}
 }

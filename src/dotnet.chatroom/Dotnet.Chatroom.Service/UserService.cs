@@ -48,7 +48,7 @@ namespace Dotnet.Chatroom.Service
 		{
 			_logger.LogInformation("Encrypting the password");
 
-			user.Password = _encryptor.Encryt(user.Password);
+			user.Password = _encryptor.Encrypt(user.Password);
 			user.Created = DateTimeOffset.UtcNow;
 
 			return _userRespository.AddAsync(user, cancellationToken);

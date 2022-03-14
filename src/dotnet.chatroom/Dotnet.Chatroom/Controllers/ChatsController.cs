@@ -84,7 +84,7 @@ namespace Dotnet.Chatroom.Controllers
 			if (string.IsNullOrWhiteSpace(audience))
 				return BadRequest(new ArgumentNullException(nameof(audience)));
 
-			_logger.LogInformation("Getting {itemsPerPage} the messages for the audience: {audience}", audience);
+			_logger.LogInformation("Getting {itemsPerPage} the messages for the audience: {audience}", itemsPerPage, audience);
 
 			try
 			{

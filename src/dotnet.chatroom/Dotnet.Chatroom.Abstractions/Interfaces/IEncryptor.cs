@@ -10,12 +10,12 @@
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		string Encryt(string value);
+		string Encrypt(string value);
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		string Decryt(string value);
+		string Decrypt(string value);
 	}
 }

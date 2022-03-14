@@ -3,8 +3,8 @@
     <button class="cursor-pointer" (click)="send(text.value)">Send</button>
 </div>
 
-<div class="messages" [ngClass]="{'empty': messages.length <= 0}">
-    <ng-container *ngIf="messages.length <= 0">
+<div class="messages" [ngClass]="{'empty': messages?.length <= 0}">
+    <ng-container *ngIf="messages?.length <= 0">
         There are not messages to show!
     </ng-container>
     <ng-container *ngFor="let message of messages">
@@ -18,7 +18,12 @@
                     {{getCommandContent(message.content)}}
                 </div>
                 <ng-template #noStock>
-                    <div class="content">{{message.content}}</div>
+                    <div class="content" *ngFor="let content of replaceCommands(message.content); let idx = index">
+                        {{content}}
+                        <ng-container *ngIf="(idx + 1) < replaceCommands(message.content).length">
+                            <br><br>
+                        </ng-container>
+                    </div>
                 </ng-template>
             </div>
         </div>

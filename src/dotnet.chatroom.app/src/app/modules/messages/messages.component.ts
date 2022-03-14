@@ -118,7 +118,17 @@ export class MessagesComponent implements AfterViewInit, OnDestroy {
     const close: string = content.close ?? content.Close;
     const price = new DecimalPipe('en-US').transform(close, '0.2-2');
 
-    return `${stockCode.toUpperCase()} quote is $${price} per share`;
+    return `${stockCode?.toUpperCase()} quote is $${price} per share`;
+  }
+
+  public replaceCommands(message: string): Array<string> {
+    const commands: string = environment.commands.join(',');
+    const unknowCommand: Array<string> = message.split('{commands}');
+
+    if (unknowCommand.length <= 1)
+      return [message];
+    
+    return [unknowCommand[0], commands, unknowCommand[1]];
   }
 
   private getByAudience(): void {

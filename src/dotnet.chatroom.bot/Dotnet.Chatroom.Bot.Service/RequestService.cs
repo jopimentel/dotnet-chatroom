@@ -72,7 +72,7 @@ namespace Dotnet.Chatroom.Bot.Service
 					Action = dataTransferObject.Action,
 					Value = dataTransferObject.StockCode
 				},
-				Date = DateTimeOffset.UtcNow,
+				Created = DateTimeOffset.UtcNow,
 				Audience = _context.Audience
 			};
 

@@ -74,7 +74,6 @@ namespace Dotnet.Chatroom
 
 			model.QueueDeclare(handler.Queue, durable: true, exclusive: false, autoDelete: false);
 
-			CancellationTokenSource tokenSource = new(Environment.HandleTimeout);
 			EventingBasicConsumer consumer = new(model);
 
 			consumer.Received += (object sender, BasicDeliverEventArgs arguments) =>
@@ -85,6 +84,7 @@ namespace Dotnet.Chatroom
 					string body = Encoding.UTF8.GetString(message);
 					object data = JsonSerializer.Deserialize(body, genericType);
 					MethodInfo method = type.GetMethod("HandleAsync");
+					CancellationTokenSource tokenSource = new(Environment.HandleTimeout);
 
 					method.Invoke(instance, parameters: new[] { data, model, arguments, tokenSource.Token });
 				}

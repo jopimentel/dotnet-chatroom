@@ -18,16 +18,22 @@ namespace Dotnet.Chatroom
 		/// Allows to save the messages to the database. 
 		/// </summary>
 		private readonly IChatService _chatService;
+		/// <summary>
+		/// Allows to encrypt and decrypt a text.
+		/// </summary>
+		private readonly IEncryptor _encryptor;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="ChatsHub"/> type.
 		/// </summary>
 		/// <param name="logger">An instance of <see cref="ILogger{TCategoryName}"/> used to write log messages.</param>
 		/// <param name="chatService">The <see cref="IChatService"/> used to manage the <see cref="Chat"/> and <see cref="Message"/> entities.</param>
-		public ChatsHub(ILogger<ChatsHub> logger, IChatService chatService)
+		/// <param name="encryptor">The instance of the <see cref="IEncryptor"/> to be used to encrypt and the decrypt a <see langword="string"/> message.</param>
+		public ChatsHub(ILogger<ChatsHub> logger, IChatService chatService, IEncryptor encryptor)
 		{
 			_logger = logger;
 			_chatService = chatService;
+			_encryptor = encryptor;
 		}
 
 		/// <summary>
@@ -73,7 +79,7 @@ namespace Dotnet.Chatroom
 			{
 				_logger.LogInformation(@"Invoking the method ""InvokeStock"" for the audience: {audience}", audience);
 
-				if (string.IsNullOrEmpty(stock.Id))
+				if (string.IsNullOrEmpty(stock.Symbol))
 				{
 					_logger.LogInformation(@"The bot couldn't get/understand a given command.");
 					await SaveAndSendAsync(audience, UnknownCommandMessage(audience));
@@ -111,6 +117,9 @@ namespace Dotnet.Chatroom
 		private async Task SaveAndSendAsync<T>(string audience, Message<T> message)
 		{
 			await _chatService.SaveMessageAsync(message);
+
+			message.Content = message.Decrypt(_encryptor);
+
 			await Clients.All.SendCoreAsync(audience, new[] { message });
 		}
 
@@ -123,7 +132,7 @@ namespace Dotnet.Chatroom
 			return new Message<string>()
 			{
 				Id = Guid.NewGuid().ToString(),
-				Type = MessageType.Command,
+				Type = MessageType.Default,
 				Emitter = Environment.Bot,
 				EmitterName = Environment.BotName,
 				Audience = audience,

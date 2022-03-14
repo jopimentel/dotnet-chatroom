@@ -8,7 +8,7 @@ export const environment = {
     chat: 'http://localhost:25594/api/chats',
     chats: 'http://localhost:25594/api/users/{id}/chats',
     hubs: 'http://localhost:25594/hub',
-    requests: 'http://localhost:8082/api/requests/{stockCode}',
+    requests: 'http://localhost:61360/api/requests/{stockCode}',
     user: 'http://localhost:25594/api/users/{id}',
     messages: 'http://localhost:25594/api/chats/{audience}?itemsPerPage=50'
   }

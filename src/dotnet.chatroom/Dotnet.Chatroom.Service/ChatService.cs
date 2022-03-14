@@ -69,15 +69,9 @@ namespace Dotnet.Chatroom.Service
 		/// <returns>A <see cref="Task{TResult}"/> that indicates the completation of the operation.</returns>
 		public Task SaveMessageAsync<T>(Message<T> message, CancellationToken cancellationToken = default)
 		{
-			if (message.Content is string)
-			{
-				_logger.LogInformation("Encrypting the message");
+			_logger.LogInformation("Encrypting the message");
 
-				string content = _encryptor.Decryt(message.Content.ToString());
-				object box = content;
-
-				message.Content = (T)box;
-			}
+			message.Content = message.Encrypt(_encryptor);
 
 			return _messageRepository.AddAsync(message, cancellationToken);
 		}
@@ -98,12 +92,7 @@ namespace Dotnet.Chatroom.Service
 			List<Message<object>> messages = await _messageRepository.GetByAudienceAsync(audience, itemsPerPage, cancellationToken);
 
 			foreach (Message<object> message in messages)
-			{
-				if (message.Content is not string)
-					continue;
-
-				message.Content = _encryptor.Decryt(message.Content.ToString());
-			}
+				message.Content = message.Decrypt(_encryptor);
 
 			return messages;
 		}
