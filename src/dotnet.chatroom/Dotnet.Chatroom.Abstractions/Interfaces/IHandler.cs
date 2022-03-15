@@ -6,7 +6,7 @@
 	public interface IHandler
 	{
 		/// <summary>
-		/// 
+		/// Refers to the queue the handler is watching.
 		/// </summary>
 		string Queue { get; }
 	}

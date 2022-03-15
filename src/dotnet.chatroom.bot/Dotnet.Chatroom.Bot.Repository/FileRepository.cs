@@ -45,6 +45,7 @@ namespace Dotnet.Chatroom.Bot.Repository
 
 			return Task.FromResult(stream);
 		}
+
 		/// <summary>
 		/// Adds to MongoDB GridFS the specified <see cref="Stream"/> object.
 		/// </summary>
