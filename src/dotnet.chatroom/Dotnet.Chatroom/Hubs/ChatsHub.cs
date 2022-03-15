@@ -92,7 +92,7 @@ namespace Dotnet.Chatroom
 					Id = stock.Id,
 					Type = MessageType.Command,
 					Emitter = Environment.Bot,
-					EmitterName = "Bot",
+					EmitterName = Environment.BotName,
 					Audience = audience,
 					Content = stock,
 					Created = DateTimeOffset.UtcNow

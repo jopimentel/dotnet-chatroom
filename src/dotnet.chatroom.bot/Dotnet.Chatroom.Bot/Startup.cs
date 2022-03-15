@@ -37,7 +37,11 @@ namespace Dotnet.Chatroom.Bot
 			OpenApiInfo openApiInfo = new () { Title = Environment.AppName, Version = $"v{AssemblyVersion}" };
 
 			services.AddControllers();
-			services.AddSwaggerGen(c => c.SwaggerDoc($"v{AssemblyVersion}", openApiInfo));
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc($"v{AssemblyVersion}", openApiInfo);
+				c.IncludeXmlComments(filePath: Path.Combine(AppContext.BaseDirectory, "Dotnet.Chatroom.Bot.xml"));
+			});
 
 			services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 			services.AddLogging(configure => configure.AddConsole());
