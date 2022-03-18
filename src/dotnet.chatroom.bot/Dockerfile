@@ -4,7 +4,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG SOURCE_URL=https://pkgs.dev.azure.com/nindo/_packaging/jobsity/nuget/v3/index.json
-ARG SOURCE_PASS=xsdtjwuwax6tqutbt2jayipeut72bnz2l3qrlt2rxhogdpkr6hxq
+ARG SOURCE_PASS=i7maiufusbsejgfsgko6s24hi3honul3n2el2egdmi3zre2iawiq
 WORKDIR /src
 COPY ["./dotnet.chatroom.bot/Dotnet.Chatroom.Bot/Dotnet.Chatroom.Bot.csproj", "Dotnet.Chatroom.Bot/"]
 RUN dotnet nuget add source $SOURCE_URL --name jobsity --username userless --password $SOURCE_PASS --store-password-in-clear-text
